@@ -1,4 +1,5 @@
 # TODO write these examples
+from profiler import profiler
 
 # Example 1:
 
@@ -9,8 +10,17 @@ import erlike as erl
 pc = erl.PC()
 gauss_like = erl.GaussianLikelihood()
 
+@profiler
+def get_mjs(func):
+    [pc.get_mjs(func) for i in range(10000)]
+    return None
+
+#pc.data.plot_xe()
+
+timing_test = get_mjs(erl.xe_tanh_pl18)
+
 mjs = pc.get_mjs(erl.xe_tanh_pl18)
-mjs_bf = pc.get_mjs(erl.xe_tanh_pl18_best_fit)
+#mjs_bf = pc.get_mjs(erl.xe_tanh_pl18_best_fit)
 
 loglike = gauss_like.get_loglike(mjs)
 loglike_bf = gauss_like.get_loglike(mjs_bf)

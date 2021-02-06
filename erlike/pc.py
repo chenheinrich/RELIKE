@@ -4,6 +4,7 @@ from scipy import integrate
 from scipy import interpolate
 
 from .data_loader import DataLoader
+from . import constants
 class PC():
 
     def __init__(self, dataset='pl18_zmax30'):
@@ -69,7 +70,6 @@ class PCData():
                 [self.zmax,  0.0], \
                 [self.zmax+10,  0.0]\
             ])
-        print('values', values)
         return interpolate.interp1d(values[:,0], values[:,1], kind='linear')
 
     def xe_fid_func_single_input(self, z):
@@ -91,11 +91,15 @@ class PCData():
         return xe_fiducial
     
     def _get_xe_lowz(self): 
-        yhe = 0.2453368 #TODO hard-coded number, needs to move elsewhere 
-        mass_ratio_he_H = 3.9715 
-        fhe = yhe/(mass_ratio_he_H*(1 - yhe)) 
-        xe_lowz = 1. + fhe
+        yhe = constants.yhe
+        mass_ratio_He_H = constants.mass_ratio_He_H
+        xe_lowz = 1. + self._get_fhe(yhe, mass_ratio_He_H)
         return xe_lowz
+
+    @staticmethod
+    def _get_fhe(yhe, mass_ratio_He_H):
+        fhe = yhe/(mass_ratio_He_H*(1 - yhe)) 
+        return fhe
 
     def plot_xe(self, nz_test=1000):
 

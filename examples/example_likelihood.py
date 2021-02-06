@@ -9,19 +9,21 @@ import erlike as erl
 
 pc = erl.PC()
 gauss_like = erl.GaussianLikelihood()
+tanh_model = erl.TanhModel()
 
-@profiler
-def get_mjs(func):
-    [pc.get_mjs(func) for i in range(10000)]
-    return None
+# Timing
+#@profiler
+#def get_mjs(func):
+#    [pc.get_mjs(func) for i in range(1000)]
+#timing_test = pc.get_mjs(xe_func_1)
 
+# Plot PC and fiducial xe(z)
 #pc.data.plot_xe()
 
-timing_test = get_mjs(erl.xe_tanh_pl18)
-
-mjs = pc.get_mjs(erl.xe_tanh_pl18)
-#mjs_bf = pc.get_mjs(erl.xe_tanh_pl18_best_fit)
-
+xe_func_1 = tanh_model.get_xe_func(zre=8.0)
+xe_func_bf = tanh_model.get_xe_func(zre=7.1)
+mjs = pc.get_mjs(xe_func_1)
+mjs_bf = pc.get_mjs(xe_func_bf)
 loglike = gauss_like.get_loglike(mjs)
 loglike_bf = gauss_like.get_loglike(mjs_bf)
 
@@ -29,8 +31,12 @@ likelihood_ratio = np.exp(loglike-loglike_bf)
 print('likelihood ratio to best-fit Planck 2018 tanh model is: \
     {}'.format(likelihood_ratio))
 
-tau = pc.get_tau(mjs)
-print('PC estimated tau = {}'.format(tau))
+chi2 = 2.0 * (loglike-loglike_bf)
+print('chi2 between this model and the best-fit Planck 2018 tanh model is: \
+    {}'.format(chi2))
+
+tau = pc.get_tau(mjs) #TODO to be polished
+print('PC estimated tau = {}'.format(tau)) 
 
 # Example 2:
 

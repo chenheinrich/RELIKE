@@ -18,14 +18,21 @@ tanh_model = erl.TanhModel()
 #timing_test = pc.get_mjs(xe_func_1)
 
 # Plot PC and fiducial xe(z)
-#pc.data.plot_xe()
+#pc.data.plot_pc()
 
-xe_func_1 = tanh_model.get_xe_func(zre=8.0)
-xe_func_bf = tanh_model.get_xe_func(zre=7.1)
-mjs = pc.get_mjs(xe_func_1)
+xe_func = tanh_model.get_xe_func(zre=8.27789306640625, no_helium=True)
+xe_func_bf = tanh_model.get_xe_func(zre=7.1, no_helium=True)
+mjs = pc.get_mjs(xe_func)
+
 mjs_bf = pc.get_mjs(xe_func_bf)
+
 loglike = gauss_like.get_loglike(mjs)
 loglike_bf = gauss_like.get_loglike(mjs_bf)
+
+print('mjs = %s'%mjs)
+print('loglike = %s'%loglike)
+
+pc.data.plot_xe(mjs, xe_func=xe_func)
 
 likelihood_ratio = np.exp(loglike-loglike_bf)
 print('likelihood ratio to best-fit Planck 2018 tanh model is: \

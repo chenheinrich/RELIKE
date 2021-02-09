@@ -22,6 +22,13 @@ v1.0
 
 This is a standalone python likelihood package, outputting the Planck likelihood for any global ionization history model _xe(z)_. The functional form of _xe(z)_ between 6 < z < zmax is specified by the user (we only support zmax = 30 for now), and fully reionized hydrogen is assumed for _z < 6_ with typical helium ionization history. 
 
+To install:
+`pip install .`
+(Add `--user` when working on a cluster)
+For editable install use: `pip install -e .`
+
+To run tests: `pytest`
+
 To run an example: 
 `python -m examples.example_likelihood`
 

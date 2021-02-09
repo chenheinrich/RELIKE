@@ -20,7 +20,6 @@ class TanhModel():
     def _setup(self):
 
         self.reion_zexp = 1.5
-        self.reion_delta_redshift = 0.5
 
         self.helium_fullreion_redshiftstart = 5.0
         self.helium_fullreion_redshift = 3.5
@@ -32,9 +31,12 @@ class TanhModel():
 
         self.xstart = 0.0 # TODO might wanna do something with this
 
-    def get_xe_func(self, zre):
-        def xe_func(z, zre=zre):
-            xe = self.xe_hydrogen(z, zre) + self.xe_helium(z)
+    def get_xe_func(self, zre, no_helium):
+        def xe_func(z, zre=zre, no_helium=no_helium):
+            if no_helium is True:
+                return self.xe_hydrogen(z, zre) 
+            else:
+                return (self.xe_hydrogen(z, zre) + self.xe_helium(z))
             #TODO decide what to do with recomb: xe = xe - xe_recomb(z)	
             return xe	
         return xe_func
@@ -59,9 +61,10 @@ class TanhModel():
         return xe_hydrogen
 
     def _get_yvar(self, zre):
-
+        
+        reion_delta_redshift = 0.015 * (1.0+zre)
         WindowVarDelta = self.reion_zexp*(1.0+zre)**(self.reion_zexp-1.0)\
-            *self.reion_delta_redshift
+            *reion_delta_redshift
         WindowVarMid = (1.0+zre)**self.reion_zexp
         
         return (WindowVarDelta, WindowVarMid)

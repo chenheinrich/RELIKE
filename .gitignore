@@ -5,6 +5,7 @@ profiler.py
 
 #Python
 *__pycache__
+*egg-info
 
 #MAC
 *.DS_Store

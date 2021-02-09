@@ -101,7 +101,7 @@ class PCData():
         fhe = yhe/(mass_ratio_He_H*(1 - yhe)) 
         return fhe
 
-    def plot_xe(self, nz_test=1000):
+    def plot_pc(self, nz_test=1000):
 
         """Saves a plot of the PC and fiducial xe(z) functions as a check for interpolation."""
         
@@ -132,7 +132,45 @@ class PCData():
         ax.set_ylabel(r'$x_e(z)$')
         ax.set_xlim([zmin, zmax])
 
-        fname = './plot_xe.pdf'
+        fname = './plot_pc.pdf'
+        plt.savefig(fname)
+        print('Saved plot: {}'.format(fname))
+
+    def plot_xe(self, mjs, fname='./plot_xe.pdf', xe_func=None, nz_test=1000):
+
+        """Saves a plot of the PC and fiducial xe(z) functions as a check for interpolation."""
+        
+        import matplotlib.pyplot as plt
+
+        fig, ax = plt.subplots()
+
+        zmin = 0
+        zmax = self.zmax+5
+        zarray = np.linspace(zmin, zmax, nz_test)
+
+        xe = self.xe_fid_func(zarray) + \
+            np.sum(np.array([mjs[j] * self.xe_mjs_func[j](zarray) for j in range(self.npc)]), axis=0)
+        ax.plot(zarray, xe, '-', lw=1,\
+            label=r'$x_e^{\mathrm{fid}}(z)$ from PC')
+
+        if xe_func is not None:
+            ax.plot(zarray, xe_func(zarray), '-', lw=1,\
+            label=r'$x_e^{\mathrm{fid}}(z)$ from function')
+
+        xe2 = np.genfromtxt('./tests/data/xe.dat')
+        ax.plot(xe2[:,0], xe2[:,1], '--', lw=1,\
+            label=r'$x_e^{\mathrm{fid}}(z)$ without helium, fortran')
+        ax.legend()
+
+        ax.axvline(x=self.zmin, color='k', lw=1)
+        ax.axvline(x=self.zmax, color='k', lw=1)
+        ax.axvline(x=self.z[0], color='k', lw=1)
+        ax.axvline(x=self.z[-1], color='k', lw=1)
+
+        ax.set_xlabel(r'$z$')
+        ax.set_ylabel(r'$x_e(z)$')
+        ax.set_xlim([zmin, zmax])
+
         plt.savefig(fname)
         print('Saved plot: {}'.format(fname))
 

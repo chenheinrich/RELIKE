@@ -6,6 +6,7 @@ profiler.py
 #Python
 *__pycache__
 *egg-info
+.pytest_cache
 
 #MAC
 *.DS_Store

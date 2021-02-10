@@ -1,29 +1,31 @@
-# TODO write these examples
 from profiler import profiler
-
-# Example 1:
 
 import numpy as np
 
 import erlike as erl
 
+def example_profiling(xe_func=None):
+    
+    pc = erl.PC()
+    if xe_func is None:
+        tanh_model = erl.TanhModel()
+        xe_func = tanh_model.get_xe_func(zre=7.1, no_helium=True)
 
-def example_1():
+    @profiler
+    def get_mjs(func):
+        [pc.get_mjs(func) for i in range(1000)]
+
+    get_mjs(xe_func)  
+
+def example_plot_pc():
+    pc = erl.PC()
+    pc.data.plot_pc()
+
+def example_likelihood_single_model():
 
     pc = erl.PC()
     gauss_like = erl.GaussianLikelihood()
     tanh_model = erl.TanhModel()
-
-    #TODO put in other example scripts?
-    #TODO put in jupyter notebook?
-    # Timing
-    #@profiler
-    #def get_mjs(func):
-    #    [pc.get_mjs(func) for i in range(1000)]
-    #timing_test = pc.get_mjs(xe_func_1)
-
-    # Plot PC and fiducial xe(z)
-    #pc.data.plot_pc()
 
     xe_func = tanh_model.get_xe_func(zre=8.27789306640625, no_helium=True)
     xe_func_bf = tanh_model.get_xe_func(zre=7.1, no_helium=True)
@@ -55,19 +57,13 @@ def example_1():
     print('real tau = {}\n'.format(tau_real))
 
 def main():
-    example_1()
-    example_2()
+    example_likelihood_single_model()
+    example_posterior()
+    
 
-def example_2():
+def example_posterior(): #Plot out tanh posterior (evaluated w/ Gaussian likelihood at points)
     pass
     #TODO implement
-    # Example 2:
-
-    # Plot out tanh posterior (evaluated w/ Gaussian likelihood at points)
-
-    # specify zre, make xe(z); get tau value by integrating (might wanna work on integration to be fast)
-
-    # plot Gaussian likelihood at these points for the posterior
 
 if __name__ == '__main__':
     main()

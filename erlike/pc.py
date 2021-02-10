@@ -19,8 +19,8 @@ class PC():
     def get_mjs(self, xe_func):
         return self.proj.get_mjs(xe_func)
 
-    def get_tau(self, mjs):
-        return self.tau.get_tau(mjs)
+    def get_tau(self, mjs, use_fiducial_cosmology, **kwargs):
+        return self.tau.get_tau(mjs, use_fiducial_cosmology, **kwargs)
 
 class PCData():
 
@@ -134,7 +134,7 @@ class PCData():
 
         fname = './plot_pc.pdf'
         plt.savefig(fname)
-        print('Saved plot: {}'.format(fname))
+        print('Saved plot: {}\n'.format(fname))
 
     def plot_xe(self, mjs, fname='./plot_xe.pdf', xe_func=None, nz_test=1000):
 
@@ -172,34 +172,7 @@ class PCData():
         ax.set_xlim([zmin, zmax])
 
         plt.savefig(fname)
-        print('Saved plot: {}'.format(fname))
-
-class PCTau():
-
-    def __init__(self, dataset='pl18_zmax30'):
-
-        self._dataset = dataset
-        self._data_loader = DataLoader(self._dataset)
-
-        (self._taufid, self._taumj) = self._load_taufid_and_taumj()
-
-    def _load_taufid_and_taumj(self):
-        taumj = self._data_loader.load_file('taumj.dat') # TODO make sure to flip sign ahead of time
-        taufid = self._data_loader.load_file('taufid.dat') 
-        return (taufid, taumj)
-    
-    def get_tau(self, mjs):
-        """Returns optical depth estimated using PC decomposition and cosmo parameters.
-        Args:
-            cosmo: ... <to fill>
-        """
-        tau = self._taufid + np.dot(self._taumj, mjs)
-        rescale = self._get_tau_rescale()
-        tau *= rescale
-        return tau
-
-    def _get_tau_rescale(self): #TODO add cosmo parameter scaling here
-        return 1
+        print('Saved plot: {}\n'.format(fname))
 
 class PCProj():   
 
@@ -236,3 +209,71 @@ class PCProj():
 
         return mjs
 
+class PCTau():
+
+    def __init__(self, dataset='pl18_zmax30'):
+
+        self._dataset = dataset
+        self._data_loader = DataLoader(self._dataset)
+
+        (self._taufid, self._taumj) = self._load_taufid_and_taumj()
+        self._cosmo_fid = self._load_cosmo_fid()
+        self._tau_prefactor_fid = self._get_tau_prefactor_fid()
+
+    def _load_taufid_and_taumj(self):
+        taumj = self._data_loader.load_file('taumj.dat') 
+        taufid = self._data_loader.load_file('taufid.dat') #xe_helium included
+        return (taufid, taumj)
+
+    def _load_cosmo_fid(self):
+        cosmo_fid = self._data_loader.load_yaml('fiducial_cosmology.yaml')
+        print('Using fiducial cosmology for tau estimation with PC: {}\n'.format(cosmo_fid))
+        return cosmo_fid
+    
+    def _get_tau_prefactor_fid(self):
+        tau_prefactor_fid = self._get_tau_prefactor(\
+            self._cosmo_fid['omegabh2'],
+            self._cosmo_fid['omegamh2'], 
+            self._cosmo_fid['yheused']
+            )
+        return tau_prefactor_fid
+
+    def get_tau(self, mjs, use_fiducial_cosmology, omegabh2=None, omegamh2=None, yheused=None):
+        """Returns optical depth estimated using PC projection.
+        Args:
+            mjs: A 1d numpy array of size npc.
+            use_fiducial_cosmology: A boolean for whether you want to use the fiducial 
+                cosmology; if False, you need to set omegabh2, omegamh2 and yheused.
+            omegabh2 (optional): A float or a numpy array for baryon density;
+                used when use_fiducial_cosmology = False.
+            omegamh2 (optional): A float or a numpy array for matter density;
+                used when use_fiducial_cosmology = False.
+            yheused (optional): A float or a numpy array for helium fraction;
+                used when use_fiducial_cosmology = False.
+        """
+        tau = self._taufid + np.dot(self._taumj, mjs)
+        
+        if use_fiducial_cosmology is True:
+            return tau
+        else:
+            if (omegabh2 is None) or (omegamh2 is None) or (yheused is None): 
+                raise Exception 
+                #TODO add custom error message to ask to set parameters 
+                # to see cosmo.yaml for fiducial cosmology.
+            tau *= self._get_tau_rescale(omegabh2, omegamh2, yheused)
+            return tau
+
+    def _get_tau_rescale(self, omegabh2, omegamh2, yheused): 
+        """Returns a scalar for the rescaling of tau due to different cosmo parameters."""
+        return self._get_tau_rescale(omegabh2, omegamh2, yheused)
+
+    def _get_tau_rescale(self, omegabh2, omegamh2, yheused): 
+        tau_prefactor = self._get_tau_prefactor(omegabh2, omegamh2, yheused)
+        rescale = tau_prefactor/self._tau_prefactor_fid
+        return rescale
+
+    @staticmethod
+    def _get_tau_prefactor(omegabh2, omegamh2, yheused):
+        """Returns prefactor for tau given cosmological parameters."""
+        tau_prefactor = omegabh2 / np.sqrt(omegamh2) * (1.0-yheused)
+        return tau_prefactor

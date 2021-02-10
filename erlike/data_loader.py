@@ -1,5 +1,6 @@
 import os
 import numpy as np
+import yaml
 
 class DataLoader():
 
@@ -17,3 +18,14 @@ class DataLoader():
         file_path = os.path.join(self._dir, file_name)
         data = np.genfromtxt(file_path, **kwargs) 
         return data
+
+    def load_yaml(self, file_name, **kwargs):
+        """Returns dictionary loaded from a yaml file of given file_name.
+
+        Args:
+            file_name: A string for yaml file name.
+        """
+        file_path = os.path.join(self._dir, file_name)
+        with open(file_path) as f:
+            dictionary = yaml.safe_load(f)
+        return dictionary

@@ -20,6 +20,7 @@ tanh_model = erl.TanhModel()
 # Plot PC and fiducial xe(z)
 #pc.data.plot_pc()
 
+# TODO to polish
 xe_func = tanh_model.get_xe_func(zre=8.27789306640625, no_helium=True)
 xe_func_bf = tanh_model.get_xe_func(zre=7.1, no_helium=True)
 mjs = pc.get_mjs(xe_func)
@@ -29,8 +30,8 @@ mjs_bf = pc.get_mjs(xe_func_bf)
 loglike = gauss_like.get_loglike(mjs)
 loglike_bf = gauss_like.get_loglike(mjs_bf)
 
-print('mjs = %s'%mjs)
-print('loglike = %s'%loglike)
+print('mjs = {}\n'.format(mjs))
+print('loglike = {}\n'.format(loglike))
 
 pc.data.plot_xe(mjs, xe_func=xe_func)
 
@@ -40,10 +41,14 @@ print('likelihood ratio to best-fit Planck 2018 tanh model is: \
 
 chi2 = 2.0 * (loglike-loglike_bf)
 print('chi2 between this model and the best-fit Planck 2018 tanh model is: \
-    {}'.format(chi2))
+    {}\n'.format(chi2))
 
-tau = pc.get_tau(mjs) #TODO to be polished
+use_fiducial_cosmology = True
+tau = pc.get_tau(mjs, use_fiducial_cosmology) #TODO to be polished
+tau_real = .059997
+
 print('PC estimated tau = {}'.format(tau)) 
+print('real tau = {}\n'.format(tau_real))
 
 # Example 2:
 

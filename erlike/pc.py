@@ -41,7 +41,7 @@ class PCData():
         self.xef = 0.15
         self.xe_lowz = self._get_xe_lowz()
 
-        self.xe_mjs_func = [self._get_func_xe_mjs(j) for j in range(5)]
+        self.xe_mjs_func = [self._get_func_xe_mjs(j) for j in range(self.npc)]
         self.xe_fid_func = self._get_func_xe_fid()
         self.xe_fid_func2 = np.vectorize(self.xe_fid_func_single_input)
     

@@ -5,9 +5,12 @@ from scipy import interpolate
 
 from .data_loader import DataLoader
 from . import constants
+from .utils.logging import class_logger
 class PC():
 
     def __init__(self, dataset='pl18_zmax30'):
+
+        self._logger = class_logger(self)
 
         self.dataset = dataset
         self._data_loader = DataLoader(self.dataset)
@@ -21,6 +24,9 @@ class PC():
 
     def get_tau(self, mjs, use_fiducial_cosmology, **kwargs):
         return self.tau.get_tau(mjs, use_fiducial_cosmology, **kwargs)
+
+    def plot_pc(self):
+        return self.data.plot_pc()
 
     def plot_xe(self, mjs, **kwargs):
         return self.data.plot_xe(mjs, **kwargs)
@@ -62,10 +68,11 @@ class PC():
 
 
 
-
 class PCData():
 
     def __init__(self, dataset='pl18_zmax30'):
+
+        self._logger = class_logger(self)
 
         self.dataset = dataset
         self._data_loader = DataLoader(self.dataset)
@@ -142,9 +149,16 @@ class PCData():
         fhe = yhe/(mass_ratio_He_H*(1 - yhe)) 
         return fhe
 
-    def plot_pc(self, nz_test=1000):
-
-        """Saves a plot of the PC and fiducial xe(z) functions as a check for interpolation."""
+    def plot_pc(self, nz_test=1000, plot_file_name=None):
+        """
+        Plot the first few PC functions and the fiducial xe(z).
+        
+        Args:
+            nz_test (optional): An integer, for the number of redshift points 
+                used for the plot.
+            plot_file_name (optional): A string for the file path of the plot
+                to save; no plot is saved if plot_file_name=None. 
+        """
         
         import matplotlib.pyplot as plt
 
@@ -173,9 +187,9 @@ class PCData():
         ax.set_ylabel(r'$x_e(z)$')
         ax.set_xlim([zmin, zmax])
 
-        fname = './plot_pc.pdf'
-        plt.savefig(fname)
-        print('Saved plot: {}\n'.format(fname))
+        if plot_file_name is not None:
+            plt.savefig(plot_file_name)
+            print('Saved plot: {}\n'.format(plot_file_name))
 
     def plot_xe(self, mjs, plot_name='./plot_xe.pdf', \
             xe_file_name=None, label_xe_from_file=None, \
@@ -238,6 +252,8 @@ class PCProj():
 
     def __init__(self, dataset='pl18_zmax30'):
 
+        self._logger = class_logger(self)
+
         self.pc_data = PCData(dataset)
 
     def get_mjs(self, xe_func, n_simpson=1000):
@@ -273,6 +289,8 @@ class PCTau():
 
     def __init__(self, dataset='pl18_zmax30'):
 
+        self._logger = class_logger(self)
+
         self._dataset = dataset
         self._data_loader = DataLoader(self._dataset)
 
@@ -284,6 +302,9 @@ class PCTau():
         self._cosmo_fid = self._load_cosmo_fid()
 
         self._tau_prefactor_fid = self._get_tau_prefactor_fid()
+
+        self._logger.debug('Using fiducial cosmology for \
+            tau estimation with PC: {}\n'.format(self._cosmo_fid))
 
     def _load_taufid_and_taumj(self):
         taumj = self._data_loader.load_file('taumj.dat') 
@@ -307,7 +328,6 @@ class PCTau():
 
     def _load_cosmo_fid(self):
         cosmo_fid = self._data_loader.load_yaml('fiducial_cosmology.yaml')
-        print('Using fiducial cosmology for tau estimation with PC: {}\n'.format(cosmo_fid))
         return cosmo_fid
     
     def _get_tau_prefactor_fid(self):
@@ -331,6 +351,7 @@ class PCTau():
             yheused (optional): A float or a numpy array for helium fraction;
                 used when use_fiducial_cosmology = False.
         """
+
         tau = self._taufid + np.dot(self._taumj, mjs)
         
         if use_fiducial_cosmology is False:

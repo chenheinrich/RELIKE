@@ -6,7 +6,8 @@ class DataLoader():
 
     def __init__(self, dataset='pl18_zmax30'):
         self._dataset = dataset
-        self._dir = os.path.join('./relike/data/', self._dataset) #TODO check portability
+        self._relike_dir = os.path.dirname(os.path.realpath(__file__))
+        self._dir = os.path.join('%s/data/'%self._relike_dir, self._dataset) 
 
     def load_file(self, file_name, **kwargs):
         """Returns data from given file_name for the dataset.

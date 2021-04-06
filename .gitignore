@@ -1,20 +1,17 @@
-<<<<<<< HEAD
-# Debug
-cosmomc_public
-=======
 #debug
 CosmoMC
->>>>>>> chen/debug_higher_pc
 
 # Outputs
 *.pdf
 *profiler/
 profiler.py
+plots
 
 #Python
 *__pycache__
 *egg-info
 .pytest_cache
+*.ipynb_checkpoints
 
 #MAC
 *.DS_Store

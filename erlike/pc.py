@@ -22,6 +22,47 @@ class PC():
     def get_tau(self, mjs, use_fiducial_cosmology, **kwargs):
         return self.tau.get_tau(mjs, use_fiducial_cosmology, **kwargs)
 
+    def plot_xe(self, mjs, **kwargs):
+        return self.data.plot_xe(mjs, **kwargs)
+
+    def plot_tau_cumulative(self, mjs, plot_name='./plot_cumulative_tau.pdf'):
+
+        """Saves a plot of tau(>z) given input mjs.
+        """
+        
+        import matplotlib.pyplot as plt
+
+        fig, ax = plt.subplots()
+
+        zmin =  0
+        zmax = self.data.zmax+5
+        #zarray = np.linspace(zmin, zmax, nz_test)
+
+        assert mjs.size == self.data.npc, (mjs.size, self.data.npc)
+        
+        (zarray, tau_cum) = self.tau.get_tau_cumulative(mjs, use_fiducial_cosmology=True)
+        print('tau_cum.shape', tau_cum.shape)
+        label_tau_from_mjs = 'm = [' + ', '.join(['%.2f'%m for m in mjs]) + ']'
+        ax.plot(zarray, tau_cum, '-', lw=1,\
+            label=label_tau_from_mjs)
+        
+        ax.legend()
+
+        ax.axvline(x=self.data.zmin, color='k', lw=1)
+        ax.axvline(x=self.data.zmax, color='k', lw=1)
+        ax.axvline(x=self.data.z[0], color='k', lw=1)
+        ax.axvline(x=self.data.z[-1], color='k', lw=1)
+
+        ax.set_xlabel(r'$z$')
+        ax.set_ylabel(r'$\tau(z, z_{\mathrm{max}})$')
+        ax.set_xlim([zmin, zmax])
+
+        plt.savefig(plot_name)
+        print('Saved plot: {}\n'.format(plot_name))
+
+
+
+
 class PCData():
 
     def __init__(self, dataset='pl18_zmax30'):
@@ -136,30 +177,48 @@ class PCData():
         plt.savefig(fname)
         print('Saved plot: {}\n'.format(fname))
 
-    def plot_xe(self, mjs, fname='./plot_xe.pdf', xe_func=None, nz_test=1000):
+    def plot_xe(self, mjs, plot_name='./plot_xe.pdf', \
+            xe_file_name=None, label_xe_from_file=None, \
+            xe_func=None, label_xe_from_func=None, \
+            nz_test=1000):
 
-        """Saves a plot of the PC and fiducial xe(z) functions as a check for interpolation."""
+        """Saves a plot of xe(z) given input mjs and fiducial xe for PCs.
+        - If xe_file_name is specified, it plots also xe(z) from the file
+         which should be in the form of two columns: z and xe(z). 
+        - If xe_func is specified, it plots also xe(z) between 0 and zmax+5, 
+          where zmax is the PC zmax. 
+        """
         
         import matplotlib.pyplot as plt
 
         fig, ax = plt.subplots()
 
-        zmin = 0
+        zmin =  0
         zmax = self.zmax+5
         zarray = np.linspace(zmin, zmax, nz_test)
 
+        assert mjs.size == self.npc, (mjs.size, self.npc)
+        
         xe = self.xe_fid_func(zarray) + \
             np.sum(np.array([mjs[j] * self.xe_mjs_func[j](zarray) for j in range(self.npc)]), axis=0)
+        label_xe_from_mjs = 'm = [' + ', '.join(['%.2f'%m for m in mjs]) + ']'
         ax.plot(zarray, xe, '-', lw=1,\
-            label=r'$x_e^{\mathrm{fid}}(z)$ from PC')
+            label=label_xe_from_mjs)
 
         if xe_func is not None:
+            if label_xe_from_func is None:
+                label_xe_from_func = r'$x_e(z)$ from function'
             ax.plot(zarray, xe_func(zarray), '-', lw=1,\
-            label=r'$x_e^{\mathrm{fid}}(z)$ from function')
+                label=label_xe_from_func)
 
-        xe2 = np.genfromtxt('./tests/data/xe.dat')
-        ax.plot(xe2[:,0], xe2[:,1], '--', lw=1,\
-            label=r'$x_e^{\mathrm{fid}}(z)$ without helium, fortran')
+        if xe_file_name is not None:
+            print('Plotting from input file: {}'.format(xe_file_name))
+            xe2 = np.genfromtxt(xe_file_name)
+            if label_xe_from_file is None:
+                label_xe_from_file = r'$x_e(z)$ from file'
+            ax.plot(xe2[:,0], xe2[:,1], '--', lw=1,\
+                label=label_xe_from_file)
+        
         ax.legend()
 
         ax.axvline(x=self.zmin, color='k', lw=1)
@@ -171,8 +230,9 @@ class PCData():
         ax.set_ylabel(r'$x_e(z)$')
         ax.set_xlim([zmin, zmax])
 
-        plt.savefig(fname)
-        print('Saved plot: {}\n'.format(fname))
+        plt.savefig(plot_name)
+        print('Saved plot: {}\n'.format(plot_name))
+
 
 class PCProj():   
 
@@ -217,13 +277,33 @@ class PCTau():
         self._data_loader = DataLoader(self._dataset)
 
         (self._taufid, self._taumj) = self._load_taufid_and_taumj()
+
+        (self._zarray_cum, self._taufid_cum, self._taumj_cum) = \
+            self._load_zarray_and_taufid_and_taumj_cum()
+
         self._cosmo_fid = self._load_cosmo_fid()
+
         self._tau_prefactor_fid = self._get_tau_prefactor_fid()
 
     def _load_taufid_and_taumj(self):
         taumj = self._data_loader.load_file('taumj.dat') 
         taufid = self._data_loader.load_file('taufid.dat') #xe_helium included
         return (taufid, taumj)
+
+    def _load_zarray_and_taufid_and_taumj_cum(self):
+        """Returns 1d numpy array for zarray and taufid cumulative, and 
+        2d numpy array of shape (nz, npc) for taumj cumulative."""
+
+        taumj_cum = self._data_loader.load_file('taumj_cumulative.dat') 
+        taufid_cum = self._data_loader.load_file('taufid_cumulative.dat') #xe_helium included
+    
+        self._check_zarray_are_same(taufid_cum[:,0], taumj_cum[:,0])
+        zarray = taufid_cum[:,0]
+
+        return (zarray, taufid_cum[:, 1], taumj_cum[:, 1:])
+
+    def _check_zarray_are_same(self, z1, z2):
+        assert np.allclose(z1, z2)
 
     def _load_cosmo_fid(self):
         cosmo_fid = self._data_loader.load_yaml('fiducial_cosmology.yaml')
@@ -253,15 +333,43 @@ class PCTau():
         """
         tau = self._taufid + np.dot(self._taumj, mjs)
         
-        if use_fiducial_cosmology is True:
-            return tau
-        else:
+        if use_fiducial_cosmology is False:
             if (omegabh2 is None) or (omegamh2 is None) or (yheused is None): 
                 raise Exception 
                 #TODO add custom error message to ask to set parameters 
                 # to see cosmo.yaml for fiducial cosmology.
             tau *= self._get_tau_rescale(omegabh2, omegamh2, yheused)
-            return tau
+        
+        return tau
+
+    def get_tau_cumulative(self, mjs, use_fiducial_cosmology, omegabh2=None, omegamh2=None, yheused=None):
+        """Returns cumulative optical depth tau(>z) estimated using PC projection.
+        Args:
+            mjs: A 1d numpy array of size npc.
+            use_fiducial_cosmology: A boolean for whether you want to use the fiducial 
+                cosmology; if False, you need to set omegabh2, omegamh2 and yheused.
+            omegabh2 (optional): A float or a numpy array for baryon density;
+                used when use_fiducial_cosmology = False.
+            omegamh2 (optional): A float or a numpy array for matter density;
+                used when use_fiducial_cosmology = False.
+            yheused (optional): A float or a numpy array for helium fraction;
+                used when use_fiducial_cosmology = False.
+        """
+        npc = self._taumj_cum.shape[1] #TODO centralize this
+
+        # (npc, nz)
+        tau_cum = self._taufid_cum + \
+            np.sum(np.array([mjs[j] * self._taumj_cum[:,j] for j in range(npc)]), axis=0)
+        
+        if use_fiducial_cosmology is False:
+            if (omegabh2 is None) or (omegamh2 is None) or (yheused is None): 
+                raise Exception 
+                #TODO add custom error message to ask to set parameters 
+                # to see cosmo.yaml for fiducial cosmology.
+            tau_cum *= self._get_tau_rescale(omegabh2, omegamh2, yheused)
+        
+        return (self._zarray_cum, tau_cum)
+        #TODO code duplication to be removed
 
     def _get_tau_rescale(self, omegabh2, omegamh2, yheused): 
         """Returns a scalar for the rescaling of tau due to different cosmo parameters."""
@@ -277,3 +385,5 @@ class PCTau():
         """Returns prefactor for tau given cosmological parameters."""
         tau_prefactor = omegabh2 / np.sqrt(omegamh2) * (1.0-yheused)
         return tau_prefactor
+
+    

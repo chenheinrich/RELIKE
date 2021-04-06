@@ -1,4 +1,4 @@
-# README for ERLike/data
+# README for relike/data
 
 - __pl18_zmax30/pc_invcov.dat__: inverse covariance matrix from running PC chains with Planck 2018 likelihoods using srollv2 for the low-l EE likelihood. 
 

@@ -2,13 +2,13 @@ from profiler import profiler
 
 import numpy as np
 
-import erlike as erl
+import relike as rel
 
 def example_profiling(xe_func=None):
     
-    pc = erl.PC()
+    pc = rel.PC()
     if xe_func is None:
-        tanh_model = erl.TanhModel()
+        tanh_model = rel.TanhModel()
         xe_func = tanh_model.get_xe_func(zre=7.1, no_helium=True)
 
     @profiler
@@ -18,14 +18,14 @@ def example_profiling(xe_func=None):
     get_mjs(xe_func)  
 
 def example_plot_pc():
-    pc = erl.PC()
+    pc = rel.PC()
     pc.data.plot_pc()
 
 def example_likelihood_single_model():
 
-    pc = erl.PC()
-    gauss_like = erl.GaussianLikelihood()
-    tanh_model = erl.TanhModel()
+    pc = rel.PC()
+    gauss_like = rel.GaussianLikelihood()
+    tanh_model = rel.TanhModel()
 
     xe_func = tanh_model.get_xe_func(zre=8.27789306640625, no_helium=True)
     xe_func_bf = tanh_model.get_xe_func(zre=7.1, no_helium=True)

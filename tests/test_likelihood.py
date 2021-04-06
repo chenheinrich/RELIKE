@@ -2,11 +2,11 @@
 import pytest
 import numpy as np
 
-import erlike as erl
+import relike as rel
 
-pc = erl.PC()
-gauss_like = erl.GaussianLikelihood()
-tanh_model = erl.TanhModel()
+pc = rel.PC()
+gauss_like = rel.GaussianLikelihood()
+tanh_model = rel.TanhModel()
 
 def test_get_mjs():
     xe_func = tanh_model.get_xe_func(zre=8.27789306640625, no_helium=True)

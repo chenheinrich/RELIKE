@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 # Debug
 cosmomc_public
+=======
+#debug
+CosmoMC
+>>>>>>> chen/debug_higher_pc
 
 # Outputs
 *.pdf

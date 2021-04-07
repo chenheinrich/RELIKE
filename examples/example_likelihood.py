@@ -1,6 +1,7 @@
 from profiler import profiler
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 
 import relike
 
@@ -81,24 +82,41 @@ def example_posterior(): #Plot out tanh posterior (evaluated w/ Gaussian likelih
 
     plot_tau_posterior_tanh(tau_values, likelihood, \
         './plots/plot_tau_posterior_tanh.png')
-    plot_tau_posterior_tanh(tau_values, likelihood, \
+    plot_zre_posterior_tanh(zre_values, likelihood, \
         './plots/plot_zre_posterior_tanh.png')
 
 def plot_tau_posterior_tanh(tau_values, likelihood, plot_file_name):
+    """Assuming flat prior in tau"""
     fig, ax = plt.subplots()
-    plt.plot(tau_values, likelihood)
+    ax.plot(tau_values, likelihood/np.max(likelihood), label = 'RELIKE')
     ax.set_xlabel(r'$\tau_{\rm tanh}$')
     ax.set_ylabel(r'$P(\tau_{\rm tanh})$')
     ax.set_xlim([tau_values[0], tau_values[-1]])
 
-    #TODO np.genfromtxt(fn_tau_posterior)
-    # compare with that expected
-    # might want actual tau_values instead of taupc, but it should be good agreement
+    example_dir = os.path.dirname(os.path.realpath(__file__))
+    fn = 'tau_posterior_pl18_tanh_pliklite_srollv2_dz_auto.dat'
+    fn = os.path.join(example_dir, 'data/', fn)
+    data = np.genfromtxt(fn)
+
+    fn2 = 'tau_posterior_pl18_tanh_mcmc_gaussian_likelihood_dz_auto.dat'
+    fn2 = os.path.join(example_dir, 'data/', fn2)
+    data2 = np.genfromtxt(fn2)
+
+    fn3 = 'tau_posterior_pl18_tanh_mcmc_kde_dz_auto.dat'
+    fn3 = os.path.join(example_dir, 'data/', fn3)
+    data3 = np.genfromtxt(fn3)
+
+    ax.plot(data[:,0], data[:,1], label = 'Exact')
+    #ax.plot(data2[:,0], data2[:,1], '--', label = 'Gaussian')
+    #ax.plot(data3[:,0], data3[:,1], ':', label = 'KDE')
+
+    ax.legend()
 
     plt.savefig(plot_file_name)
     print('Saved plot: {}'.format(plot_file_name))
 
 def plot_zre_posterior_tanh(zre_values, likelihood, plot_file_name):
+    """Assuming flat prior in zre"""
     fig, ax = plt.subplots()
     plt.plot(zre_values, likelihood)
     ax.set_xlabel(r'$z_{\rm re}$')
@@ -107,8 +125,6 @@ def plot_zre_posterior_tanh(zre_values, likelihood, plot_file_name):
 
     plt.savefig(plot_file_name)
     print('Saved plot: {}'.format(plot_file_name))
-
-
 
         
 

@@ -17,7 +17,7 @@ v1.0
 - Supporting arbitrary xe(z) specified by the user between _6 < z < zmax_, where zmax = 30; assuming fully reionized hydrogen for _z < 6_.
 - Planck likelihoods used: plik_lite_TTTEEE + lowl + srollv2.
 
-## Standalone Python Likelihood: `relike`
+## `relike`: Python Package for the Reionization Effective Likelihood
 
 This is a standalone python likelihood package, outputting the Planck likelihood for any global ionization history model _xe(z)_. The functional form of _xe(z)_ between 6 < z < zmax is specified by the user (we only support zmax = 30 for now), and fully reionized hydrogen is assumed for _z < 6_ with typical helium ionization history. 
 

@@ -25,11 +25,12 @@ This is a standalone python likelihood package, outputting the Planck likelihood
 
   `pip install .` 
 
-(Add `--user` when working on a cluster)
+  (Add `--user` when working on a cluster)
 
-For editable install use: `pip install -e .`
+  For editable install use: `pip install -e .`
 
 - To run tests: 
+
   `pytest tests`
 
 - To play with `relike` using Jupyter notebooks:

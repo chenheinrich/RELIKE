@@ -22,15 +22,20 @@ v1.0
 This is a standalone python likelihood package, outputting the Planck likelihood for any global ionization history model _xe(z)_. The functional form of _xe(z)_ between 6 < z < zmax is specified by the user (we only support zmax = 30 for now), and fully reionized hydrogen is assumed for _z < 6_ with typical helium ionization history. 
 
 To install:
-`pip install .`
-(Add `--user` when working on a cluster)
+
+`pip install .` (Add `--user` when working on a cluster)
+
 For editable install use: `pip install -e .`
 
-To run tests: `pytest tests`
+To run tests: 
+`pytest tests`
 
-To play with `relike` using Jupyter notebooks, see `jupyter notebook examples/example.ipynb `.
+To play with `relike` using Jupyter notebooks:
+
+`jupyter notebook examples/example.ipynb `.
 
 To run example script (same as in the demo Jupyter notebook): 
+
 `python -m examples.example_likelihood`
 
 This will run two examples: 1) print the relative chi-squared of an example tanh model relative to the Planck 2018 best-fit tanh model; 2) calculate and plot the optical depth posterior in the tanh model using relike.

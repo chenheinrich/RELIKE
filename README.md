@@ -25,7 +25,7 @@ This is a standalone python likelihood package, outputting the Planck likelihood
 
   `pip install .` 
 
-  For editable install use: 
+  For editable install: 
   
   `pip install -e .`
 

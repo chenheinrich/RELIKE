@@ -17,7 +17,7 @@ v1.0
 - Supporting arbitrary xe(z) specified by the user between _6 < z < zmax_, where zmax = 30; assuming fully reionized hydrogen for _z < 6_.
 - Planck likelihoods used: plik_lite_TTTEEE + lowl + srollv2.
 
-## Standalone Python Likelihood: relike
+## Standalone Python Likelihood: `relike`
 
 This is a standalone python likelihood package, outputting the Planck likelihood for any global ionization history model _xe(z)_. The functional form of _xe(z)_ between 6 < z < zmax is specified by the user (we only support zmax = 30 for now), and fully reionized hydrogen is assumed for _z < 6_ with typical helium ionization history. 
 
@@ -43,7 +43,7 @@ This is a standalone python likelihood package, outputting the Planck likelihood
 
   This will run two examples: 1) print the relative chi-squared of an example tanh model relative to the Planck 2018 best-fit tanh model; 2) calculate and plot the optical depth posterior in the tanh model using relike.
 
-## CosmoMC: MCMC Sampler + Fortran Implementation
+## `CosmoMC-relike`: MCMC Sampler with Fortran implementation of relike
 
 _Installation instructions goes here._
 

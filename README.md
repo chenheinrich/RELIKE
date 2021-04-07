@@ -1,40 +1,53 @@
-# Effective Reionization Likelihood
+# Reionization Effective Likelihood
 
-The Effective Reionization Likelihood (ERLike) is a fast and accurate likelihood code that compresses the final Planck 2018 likelihoods for the purpose of constraining reionization models.
+The Reionization Effective Likelihood (RELIKE) is a fast and accurate likelihood code that compresses the final Planck 2018 likelihoods for the purpose of constraining models of the global ionization history.
 
-- You can constrain any model of the global ionization history _xe(z)_ in the range
-6 < z < zmax; this is done by projecting the model onto principal components (PC) of ionization history in the CMB data. 
-- You can quickly evaluate the likelihood of a single model and plot parameter posteriors (see **Standalone Python Likelihood: erlike**). 
-- You can also run a MCMC chain, which typically converges a few hundred times faster than directly sampling the Planck likelihoods. 
-- We offer CosmoMC implementations in fortran; one can easily install the python standalone code using Cobaya in python. 
+- Using the **python package `relike`**, you can obtain the likelihood of any model of ionization history _xe(z)_ in the range
+6 < z < zmax. 
 
-Reference: <...>
+- The `relike` code works by projecting the model onto the principal components (PC) of ionization history in the CMB data for its PC amplitudes _mj_'s, which are used to quickly return the effective likelihood of the model; you may also use it to evaluate the likelihood at multiple points and plot the parameter posteriors (assuming flat prior in the parameter). 
+
+- To run an MCMC chain, you can either use the `relike` python package from inside of a sampler (e.g. Cobaya or Cosmosis), or use our release of **`CosmoMC-relike`** which has an implementation of the relike code in fortran (both in KDE and Gaussian modes) used to produce published results. 
+
+- Note that there are two modes of effective likelihoods: 1) kernel density estimate (KDE) mode, which is slightly more accurate, and 2) the Gaussian approximation mode, which is good enough for most models. The python `relike` contains the Gaussian mode only, while the fortran implementation in `CosmoMC-relike` has both. 
+
+Reference: Heinrich & Hu 2021 (arxiv: _fill in_)
 
 ## Release Note
 
 v1.0
-- Added **erlike**: a standalone python likelihood package.
-- Added **CosmoMC**: a MCMC implementation using CosmoMC sampler. 
+- Added **`relike`**: a standalone python likelihood package.
+- Added **`CosmoMC-relike`**: a MCMC implementation using CosmoMC sampler. 
 - Supporting arbitrary xe(z) specified by the user between _6 < z < zmax_, where zmax = 30; assuming fully reionized hydrogen for _z < 6_.
 - Planck likelihoods used: plik_lite_TTTEEE + lowl + srollv2.
 
-## Standalone Python Likelihood: erlike
+## `relike`: Python Likelihood Package
 
 This is a standalone python likelihood package, outputting the Planck likelihood for any global ionization history model _xe(z)_. The functional form of _xe(z)_ between 6 < z < zmax is specified by the user (we only support zmax = 30 for now), and fully reionized hydrogen is assumed for _z < 6_ with typical helium ionization history. 
 
-To install:
-`pip install .`
-(Add `--user` when working on a cluster)
-For editable install use: `pip install -e .`
+- To install (add `--user` when working on a cluster):
 
-To run tests: `pytest`
+  `pip install .` 
 
-To run an example: 
-`python -m examples.example_likelihood`
+  For editable install: 
+  
+  `pip install -e .`
 
-This will print the likelihood of an example model relative to the Planck 2018 best-fit tanh model and to plot the posterior of the reionization parameter in an example model.
+- To run tests: 
 
-## CosmoMC: MCMC Sampler + Fortran Implementation
+  `pytest tests`
+
+- To play with `relike` using Jupyter notebooks:
+
+  `jupyter notebook examples/example.ipynb `.
+
+- To run example script (same as in the demo Jupyter notebook): 
+
+  `python -m examples.example_likelihood`
+
+  This will run two examples: 1) print the relative chi-squared of an example tanh model relative to the Planck 2018 best-fit tanh model; 2) calculate and plot the optical depth posterior in the tanh model using relike.
+
+## `CosmoMC-relike`: MCMC Sampler + relike in Fortran
 
 _Installation instructions goes here._
 

@@ -36,7 +36,7 @@ v1.0
   See the `CosmoMC-relike` section for how to install this code. 
 
 
-## `relike`: Python Likelihood Package
+### Installation for `relike`: Python Likelihood Package
 
 This is a standalone python likelihood package, outputting the Planck likelihood for any global ionization history model _xe(z)_. The functional form of _xe(z)_ between 6 < z < zmax is specified by the user (we only support zmax = 30 for now), and fully reionized hydrogen is assumed for _z < 6_ with typical helium ionization history. 
 
@@ -62,7 +62,7 @@ This is a standalone python likelihood package, outputting the Planck likelihood
 
   This will run two examples: 1) print the relative chi-squared of an example tanh model relative to the Planck 2018 best-fit tanh model; 2) calculate and plot the optical depth posterior in the tanh model using relike.
 
-## `CosmoMC-relike`: MCMC Sampler + relike in Fortran
+### Installation for `CosmoMC-relike`: MCMC Sampler + relike in Fortran
 
 _Installation instructions goes here._
 

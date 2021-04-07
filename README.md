@@ -2,12 +2,13 @@
 
 The Reionization Effective Likelihood (RELIKE) is a fast and accurate likelihood code that compresses the final Planck 2018 likelihoods for the purpose of constraining models of the global ionization history.
 
-Using the **python package `relike`**, you can obtain the likelihood of any model of ionization history _xe(z)_ in the range
+- Using the **python package `relike`**, you can obtain the likelihood of any model of ionization history _xe(z)_ in the range
 6 < z < zmax. 
 
-The code works by projecting the model onto the principal components (PC) of ionization history in the CMB data for its PC amplitudes _mj_'s, which are used to quickly return the effective likelihood of the model; you may also use it to evaluate the likelihood at multiple points and plot the parameter posteriors (assuming flat prior in the parameter). 
+- The code works by projecting the model onto the principal components (PC) of ionization history in the CMB data for its PC amplitudes _mj_'s, which are used to quickly return the effective likelihood of the model; you may also use it to evaluate the likelihood at multiple points and plot the parameter posteriors (assuming flat prior in the parameter). 
 
 - You can also run a MCMC chain by either making use of the `relike` python package from insde of a sampler (e.g. Cobaya or Cosmosis), or use directly the **`CosmoMC-relike`** implementation in fortran that we also include here and have used for producing results in the paper. 
+
 - Note that there are two modes of effective likelihoods: 1) kernel density estimate (KDE) mode, which is slightly more accurate, and 2) the Gaussian approximation mode, which is good enough for most models. The python `relike` contains the Gaussian mode only, while the fortran implementation in `CosmoMC-relike` has both. 
 
 Reference: Heinrich & Hu 2021 (arxiv: _fill in_)

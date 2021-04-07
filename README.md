@@ -43,7 +43,7 @@ This is a standalone python likelihood package, outputting the Planck likelihood
 
   This will run two examples: 1) print the relative chi-squared of an example tanh model relative to the Planck 2018 best-fit tanh model; 2) calculate and plot the optical depth posterior in the tanh model using relike.
 
-## `CosmoMC-relike`: MCMC Sampler of relike in Fortran
+## `CosmoMC-relike`: MCMC Sampler + relike in Fortran
 
 _Installation instructions goes here._
 

@@ -25,11 +25,15 @@ v1.0
 
 - Clone the repository
 
-`git clone https://github.com/chenheinrich/RELIKE.git`
+  `git clone https://github.com/chenheinrich/RELIKE.git`
+  
+  skip to the `relike` section below to install the standalone python likelihood package.
 
-- If you want `CosmoMC-relike`, use
+- If you also want `CosmoMC-relike` (now or later), use
 
-`git submodule update --init --recursive`
+  `git submodule update --init --recursive`
+
+  See the `CosmoMC-relike` section for how to install this code. 
 
 
 ## `relike`: Python Likelihood Package

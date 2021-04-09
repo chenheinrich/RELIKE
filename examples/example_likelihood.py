@@ -26,36 +26,40 @@ def example_likelihood_single_model():
 
     pc = relike.PC()
     gauss_like = relike.GaussianLikelihood()
-    tanh_model = relike.TanhModel()
+    tanh_model = relike.TanhModel() #tanh model with dz = 0.015(1+z)
 
-    xe_func = tanh_model.get_xe_func(zre=8.27789306640625, no_helium=True)
-    xe_func_bf = tanh_model.get_xe_func(zre=7.1, no_helium=True)
+    # Get PC amplitudes and log-likelihood for a tanh model with dz = 0.015(1+z)
+    zre = 8.27789306640625 #TODO need to update to 10.0
+    xe_func = tanh_model.get_xe_func(zre=zre, no_helium=True)
     mjs = pc.get_mjs(xe_func)
-
-    mjs_bf = pc.get_mjs(xe_func_bf)
-
     loglike = gauss_like.get_loglike(mjs)
+
+    # Get PC amplitudes and log-likelihood for the Planck 2018 best-fit tanh model
+    zre_bf = 8.1 #TODO need to update to actual number
+    xe_func_bf = tanh_model.get_xe_func(zre=zre_bf, no_helium=True)
+    mjs_bf = pc.get_mjs(xe_func_bf)
     loglike_bf = gauss_like.get_loglike(mjs_bf)
 
-    print('mjs = {}\n'.format(mjs))
-    print('loglike = {}\n'.format(loglike))
+    print('Tanh model at zre = {}: '.format(zre))
+    print('    PC amplitudes mjs = {}'.format(mjs))
+    print('    log-likehood = {}\n'.format(loglike))
 
-    pc.data.plot_xe(mjs, xe_func=xe_func)
+    # Plot xe: exact vs PC projection
+    pc.plot_xe(mjs, xe_func=xe_func, plot_name='./plots/plot_xe.pdf')
+    # Plot cumulative tau exact vs PC projection 
+    pc.plot_tau_cumulative(mjs, plot_name='./plots/plot_tau_cumulative.pdf')
 
-    likelihood_ratio = np.exp(loglike-loglike_bf)
-    print('likelihood ratio to best-fit Planck 2018 tanh model is: \
-        {}'.format(likelihood_ratio))
+    # Get chi2 relative to Planck best-fit
+    loglike_bf = gauss_like.get_loglike(mjs_bf)
+    delta_chi_squared = -2.0 * (loglike - loglike_bf)
+    print('Chi-squared relative to the best-fit '+
+        'Planck 2018 tanh model is = {}\n'.format(delta_chi_squared))
 
-    chi2 = 2.0 * (loglike-loglike_bf)
-    print('chi2 between this model and the best-fit Planck 2018 tanh model is: \
-        {}\n'.format(chi2))
-
+    # Print total tau: exact vs from PC projection
     use_fiducial_cosmology = True
-    tau = pc.get_tau(mjs, use_fiducial_cosmology) #TODO to be polished
-    tau_real = .059997
-
-    print('PC estimated tau = {}'.format(tau)) 
-    print('real tau = {}\n'.format(tau_real))
+    tau_pc = pc.get_tau(mjs, use_fiducial_cosmology) #TODO to be polished
+    tau_exact = .059997 #TODO need to update for a zre = 10.0
+    print('tau exact vs PC: {} vs {}\n'.format(tau_exact, tau_pc)) 
 
 def example_posterior(): #Plot out tanh posterior (evaluated w/ Gaussian likelihood at points)
     
@@ -75,8 +79,6 @@ def example_posterior(): #Plot out tanh posterior (evaluated w/ Gaussian likelih
         tau_values[i] = pc.get_tau(mjs, use_fiducial_cosmology)
         likelihood[i] = np.exp(gauss_like.get_loglike(mjs))
 
-    from relike.utils.file_tools import mkdir_p
-    mkdir_p('./plots')
     plot_tau_posterior_tanh(tau_values, likelihood, \
         './plots/plot_tau_posterior_tanh.pdf')
     plot_zre_posterior_tanh(zre_values, likelihood, \

@@ -47,7 +47,6 @@ class PC():
         assert mjs.size == self.data.npc, (mjs.size, self.data.npc)
         
         (zarray, tau_cum) = self.tau.get_tau_cumulative(mjs, use_fiducial_cosmology=True)
-        print('tau_cum.shape', tau_cum.shape)
         label_tau_from_mjs = 'm = [' + ', '.join(['%.2f'%m for m in mjs]) + ']'
         ax.plot(zarray, tau_cum, '-', lw=1,\
             label=label_tau_from_mjs)

@@ -79,9 +79,17 @@ CosmoMC-relike uses the generic sampler of CosmoMC to sample the fortran impleme
 
 - Compile the code: 
 
-  `cd CosmoMC-relike`
+  `cd CosmoMC-relike/cosmomc`
   
   `make`
+  
+- Untar the chain files used for KDE:
+
+  `cd kde_data/pl18_zmax30`
+  
+  `tar -zxvf chains.tar.gz`
+  
+  `cd ../../`
 
 - Run an example by outputting a single point: <insert file>
 
@@ -89,8 +97,9 @@ CosmoMC-relike uses the generic sampler of CosmoMC to sample the fortran impleme
 
 - Run an example of tanh chains in Gaussian mode: <insert file>
 
-  `./cosmomc example_tanh_gaussian_chains.ini`
+  `./cosmomc example_tanh_gauss_chains.ini`
   
   or with MPI:
   
-  `mpirun -np 4 ./cosmomc example_tanh_gaussian_chains.ini`
+  `mpirun -np 4 ./cosmomc example_tanh_gauss_chains.ini`
+  

@@ -98,17 +98,7 @@ def plot_tau_posterior_tanh(tau_values, likelihood, plot_file_name):
     fn = os.path.join(example_dir, 'data/', fn)
     data = np.genfromtxt(fn)
 
-    fn2 = 'tau_posterior_pl18_tanh_mcmc_gaussian_likelihood_dz_auto.dat'
-    fn2 = os.path.join(example_dir, 'data/', fn2)
-    data2 = np.genfromtxt(fn2)
-
-    fn3 = 'tau_posterior_pl18_tanh_mcmc_kde_dz_auto.dat'
-    fn3 = os.path.join(example_dir, 'data/', fn3)
-    data3 = np.genfromtxt(fn3)
-
     ax.plot(data[:,0], data[:,1], label = 'Exact')
-    #ax.plot(data2[:,0], data2[:,1], '--', label = 'Gaussian')
-    #ax.plot(data3[:,0], data3[:,1], ':', label = 'KDE')
 
     ax.legend()
 

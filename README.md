@@ -64,6 +64,33 @@ This is a standalone python likelihood package, outputting the Planck likelihood
 
 ### Installing `CosmoMC-relike`: MCMC Sampler + relike in Fortran
 
-_Installation instructions goes here._
+CosmoMC-relike uses the generic sampler of CosmoMC to sample the fortran implementation of the `relike` likelihood. For more information on CosmoMC and getdist (the plotting package), see https://cosmologist.info/cosmomc/readme.html.
 
-_Instructions for running example goes here._
+- Install/Load MPI (optional)
+
+  It is recommended to load/install MPI for running chains. To do so
+  
+  - On a cluster: Find and load the MPI module (e.g. `openmpi`, `mpich` or `pmi`) on the cluster using `module avail` and `module load XX`; consult the cluster’s user guidelines).
+  - On a laptop: Install OpenMPI (https://www.open-mpi.org/) using your system’s package manager (`sudo apt install libopenmpi` in Debian-based systems)
+
+- Make sure `CosmoMC-relike` is not empty; if it is, you might have to pull the submodule via: 
+
+  `git submodule update --init --recursive`
+
+- Compile the code: 
+
+  `cd CosmoMC-relike`
+  
+  `make`
+
+- Run an example by outputting a single point: <insert file>
+
+  `./cosmomc example_tanh_kde_single_point.ini`
+
+- Run an example of tanh chains in Gaussian mode: <insert file>
+
+  `./cosmomc example_tanh_gaussian_chains.ini`
+  
+  or with MPI:
+  
+  `mpirun -np 4 ./cosmomc example_tanh_gaussian_chains.ini`

@@ -57,11 +57,6 @@ def example_likelihood_single_model():
     print('PC estimated tau = {}'.format(tau)) 
     print('real tau = {}\n'.format(tau_real))
 
-def main():
-    example_likelihood_single_model()
-    example_posterior()
-    
-
 def example_posterior(): #Plot out tanh posterior (evaluated w/ Gaussian likelihood at points)
     
     zre_values = np.linspace(6.1, 10.5, 101)
@@ -80,10 +75,12 @@ def example_posterior(): #Plot out tanh posterior (evaluated w/ Gaussian likelih
         tau_values[i] = pc.get_tau(mjs, use_fiducial_cosmology)
         likelihood[i] = np.exp(gauss_like.get_loglike(mjs))
 
+    from relike.utils.file_tools import mkdir_p
+    mkdir_p('./plots')
     plot_tau_posterior_tanh(tau_values, likelihood, \
-        './plots/plot_tau_posterior_tanh.png')
+        './plots/plot_tau_posterior_tanh.pdf')
     plot_zre_posterior_tanh(zre_values, likelihood, \
-        './plots/plot_zre_posterior_tanh.png')
+        './plots/plot_zre_posterior_tanh.pdf')
 
 def plot_tau_posterior_tanh(tau_values, likelihood, plot_file_name):
     """Assuming flat prior in tau"""
@@ -116,11 +113,10 @@ def plot_zre_posterior_tanh(zre_values, likelihood, plot_file_name):
     plt.savefig(plot_file_name)
     print('Saved plot: {}'.format(plot_file_name))
 
-        
 
-
-
+def main():
+    example_likelihood_single_model()
+    example_posterior()
     
-
 if __name__ == '__main__':
     main()

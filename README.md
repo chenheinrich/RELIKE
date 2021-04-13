@@ -31,7 +31,7 @@ v1.0
 
 - If you also want `CosmoMC-relike` (now or later), use
 
-  `git submodule update --init --recursive`
+  `git submodule update --init --recursive` <CH: Currently not working; use python only for now>
 
   See the `CosmoMC-relike` section for how to install this code. 
 
@@ -42,7 +42,7 @@ This is a standalone python likelihood package, outputting the Planck likelihood
 
 - To install (add `--user` when working on a cluster):
 
-  `pip install .` 
+  `pip install .` <CH: currently not working, use the editable install>
 
   For editable install: 
   
@@ -75,7 +75,7 @@ CosmoMC-relike uses the generic sampler of CosmoMC to sample the fortran impleme
 
 - Make sure `CosmoMC-relike` is not empty; if it is, you might have to pull the submodule via: 
 
-  `git submodule update --init --recursive`
+  `git submodule update --init --recursive` <CH: Currently not working; use python only for now>
 
 - Compile the code: 
 

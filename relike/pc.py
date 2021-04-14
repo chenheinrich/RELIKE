@@ -22,8 +22,8 @@ class PC():
     def get_mjs(self, xe_func):
         return self.proj.get_mjs(xe_func)
 
-    def get_tau(self, mjs, use_fiducial_cosmology, **kwargs):
-        return self.tau.get_tau(mjs, use_fiducial_cosmology, **kwargs)
+    def get_tau(self, mjs, **kwargs):
+        return self.tau.get_tau(mjs, **kwargs)
 
     def plot_pc(self):
         return self.data.plot_pc()
@@ -337,12 +337,17 @@ class PCTau():
             )
         return tau_prefactor_fid
 
-    def get_tau(self, mjs, use_fiducial_cosmology, omegabh2=None, omegamh2=None, yheused=None):
+    def get_tau(self, mjs, use_fiducial_cosmology=True, omegabh2=None, omegamh2=None, yheused=None):
         """Returns optical depth estimated using PC projection.
         Args:
             mjs: A 1d numpy array of size npc.
-            use_fiducial_cosmology: A boolean for whether you want to use the fiducial 
-                cosmology; if False, you need to set omegabh2, omegamh2 and yheused.
+            use_fiducial_cosmology (optional): A boolean for whether you 
+                want to use the fiducial cosmology for ONLY the purpose of 
+                calculating tau (the likelihood for example does not support 
+                cosmologies not consistent with Planck); if False, you need
+                to specify all three parameters omegabh2, omegamh2 and yheused
+                at the same time, and the returned tau will be scaled
+                accordingly.
             omegabh2 (optional): A float or a numpy array for baryon density;
                 used when use_fiducial_cosmology = False.
             omegamh2 (optional): A float or a numpy array for matter density;

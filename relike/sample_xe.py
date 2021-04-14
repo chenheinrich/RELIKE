@@ -31,22 +31,14 @@ class TanhModel():
 
         self.xstart = 0.0 # TODO might wanna do something with this
 
-    def get_xe_func(self, zre, no_helium):
-        def xe_func(z, zre=zre, no_helium=no_helium):
-            if no_helium is True:
-                return self.xe_hydrogen(z, zre) 
-            else:
-                return (self.xe_hydrogen(z, zre) + self.xe_helium(z))
-            #TODO decide what to do with recomb: xe = xe - xe_recomb(z)	
-            return xe	
+    def get_xe_func(self, zre):
+        def xe_func(z, zre=zre):
+            return (self.xe_hydrogen(z, zre) + self.xe_helium(z))
         return xe_func
-        #return np.vectorize(xe_func)
 
     def xe_helium(self, z):
-        #TODO any difference when we abort this
-        #if z > self.helium_fullreion_redshiftstart:
-        #    return 0.0
-        #else:
+        """Second ionization of helium used in the fiducial model
+        for PCs following default from CAMB. """
         xod = (1.0+self.helium_fullreion_redshift - (1.0+z))\
             /self.helium_fullreion_deltaredshift
         xe_helium = self.fHe * (1.0 + np.tanh(xod))/2.0

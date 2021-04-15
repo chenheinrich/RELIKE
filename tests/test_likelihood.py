@@ -23,7 +23,7 @@ def test_get_loglike():
     xe_func = tanh_model.get_xe_func(zre=8.27789306640625)
     mjs = pc.get_mjs(xe_func)
     loglike = gauss_like.get_loglike(mjs)
-    expected = -0.4484532654700968
+    expected = 0.009721218348963334
     assert np.allclose(loglike, expected)
 
 def test_plotting():

@@ -27,8 +27,8 @@ class PC():
     def get_tau(self, mjs, **kwargs):
         return self.tau.get_tau(mjs, **kwargs)
 
-    def plot_pc(self):
-        return self.data.plot_pc()
+    def plot_pc(self, *args, **kwargs):
+        return self.data.plot_pc(*args, **kwargs)
 
     def plot_xe(self, mjs, **kwargs):
         return self.data.plot_xe(mjs, **kwargs)
@@ -358,12 +358,16 @@ class PCTau():
         Args:
             mjs: A 1d numpy array of size npc.
             use_fiducial_cosmology (optional): A boolean for whether you 
-                want to use the fiducial cosmology for ONLY the purpose of 
-                calculating tau (the likelihood for example does not support 
-                cosmologies not consistent with Planck); if False, you need
-                to specify all three parameters omegabh2, omegamh2 and yheused
-                at the same time, and the returned tau will be scaled
-                accordingly.
+                want to use the fiducial cosmology or a different set of 
+                cosmological parameters, ONLY for the purpose of rescaling 
+                tau for a different cosmology; BE CAREFUL that the loglike
+                code does not support cosmologies inconsistent with 
+                Planck 2018). When use_fiducial_cosmology = False, you also
+                need to specify omegabh2, omegamh2 and yheused all at the 
+                same time, and the returned tau will be scaled accordingly.
+
+                docstring for this function explain there is a rescaling used 
+                for evaluating tau at a different cosmology, but be careful that loglike code does not deal with cosmologies inconsistent with Planck 2018.>
             omegabh2 (optional): A float or a numpy array for baryon density;
                 used when use_fiducial_cosmology = False.
             omegamh2 (optional): A float or a numpy array for matter density;

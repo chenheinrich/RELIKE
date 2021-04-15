@@ -19,41 +19,40 @@ def example_profiling(xe_func=None):
     get_mjs(xe_func)  
 
 def example_plot_pc():
+    print('Example 3: Plot PCs and the fiducial xe function used for PCs.\n')
     pc = relike.PC()
-    pc.plot_pc()
+    pc.plot_pc(plot_file_name='./plot_pc.pdf')
 
 def example_likelihood_single_model():
+
+    print('Example 1: likelihood ratio of a single model against tanh best-fit\n')
 
     pc = relike.PC()
     gauss_like = relike.GaussianLikelihood()
     tanh_model = relike.TanhModel() #tanh model with dz = 0.015(1+z)
 
-    # Get PC amplitudes and log-likelihood for a tanh model with dz = 0.015(1+z)
+    # Get PC amplitudes and log-likelihood for a tanh model 
     zre = 10.0 #8.27789306640625 
     xe_func = tanh_model.get_xe_func(zre=zre)
     mjs = pc.get_mjs(xe_func)
     loglike = gauss_like.get_loglike(mjs)
 
-    # Get PC amplitudes and log-likelihood for the Planck 2018 best-fit tanh model
-    zre_bf = 8.1 #TODO need to update to actual number
-    xe_func_bf = tanh_model.get_xe_func(zre=zre_bf)
-    mjs_bf = pc.get_mjs(xe_func_bf)
-    loglike_bf = gauss_like.get_loglike(mjs_bf)
-
     print('Tanh model at zre = {}: '.format(zre))
     print('    PC amplitudes mjs = {}'.format(mjs))
     print('    log-likehood = {}\n'.format(loglike))
 
+    # Get likelihood ratio and chi2 (equiavlent) relative to Planck best-fit
+    likelihood_ratio = np.exp(loglike)
+    delta_chi_squared = -2.0 * (loglike)
+    print('Likelihood ratio relative to the best-fit Planck 2018 tanh model is: {} (>1 is better)'.format(likelihood_ratio))
+    print('Chi-squared relative to the best-fit ' +
+        'Planck 2018 tanh model is: {} (negative is better) \n'.format(delta_chi_squared))
+
     # Plot xe: exact vs PC projection
     pc.plot_xe(mjs, xe_func=xe_func, plot_name='./plot_xe.pdf')
+    
     # Plot cumulative tau exact vs PC projection 
     pc.plot_tau_cumulative(mjs, plot_name='./plot_tau_cumulative.pdf')
-
-    # Get chi2 relative to Planck best-fit
-    loglike_bf = gauss_like.get_loglike(mjs_bf)
-    delta_chi_squared = -2.0 * (loglike - loglike_bf)
-    print('Chi-squared relative to the best-fit '+
-        'Planck 2018 tanh model is = {}\n'.format(delta_chi_squared))
 
     # Print total tau: exact vs from PC projection
     #tau_pc = pc.get_tau(mjs) #TODO to be polished
@@ -62,6 +61,8 @@ def example_likelihood_single_model():
 
 def example_posterior(): #Plot out tanh posterior (evaluated w/ Gaussian likelihood at points)
     
+    print('Example 2: Plot posterior for a one-parameter model: tanh model\n')
+
     zre_values = np.linspace(6.1, 10.5, 101)
     pc = relike.PC()
     gauss_like = relike.GaussianLikelihood()
@@ -77,8 +78,6 @@ def example_posterior(): #Plot out tanh posterior (evaluated w/ Gaussian likelih
 
     plot_tau_posterior_tanh(tau_values, likelihood, \
         'plot_tau_posterior_tanh.pdf')
-    plot_zre_posterior_tanh(zre_values, likelihood, \
-        'plot_zre_posterior_tanh.pdf')
 
 def plot_tau_posterior_tanh(tau_values, likelihood, plot_file_name):
     """Assuming flat prior in tau"""
@@ -98,23 +97,13 @@ def plot_tau_posterior_tanh(tau_values, likelihood, plot_file_name):
     ax.legend()
 
     plt.savefig(plot_file_name)
-    print('Saved plot: {}'.format(plot_file_name))
-
-def plot_zre_posterior_tanh(zre_values, likelihood, plot_file_name):
-    """Assuming flat prior in zre"""
-    fig, ax = plt.subplots()
-    plt.plot(zre_values, likelihood)
-    ax.set_xlabel(r'$z_{\rm re}$')
-    ax.set_ylabel(r'$P(z_{\rm re})$')
-    ax.set_xlim([zre_values[0], zre_values[-1]])
-
-    plt.savefig(plot_file_name)
-    print('Saved plot: {}'.format(plot_file_name))
-
+    print('Saved plot: {}\n'.format(plot_file_name))
 
 def main():
     example_likelihood_single_model()
     example_posterior()
+    example_plot_pc()
+    
     
 if __name__ == '__main__':
     main()

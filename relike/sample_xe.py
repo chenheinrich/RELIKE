@@ -3,6 +3,7 @@
 import numpy as np
 
 from . import constants 
+from .second_helium import SecondHelium
 
 def xe_tanh_pl18_best_fit(z):
     pass#return xe_tanh(z, zre=7.1) #TODO put in the right zre
@@ -21,30 +22,21 @@ class TanhModel():
 
         self.reion_zexp = 1.5
 
-        self.helium_fullreion_redshiftstart = 5.0
-        self.helium_fullreion_redshift = 3.5
-        self.helium_fullreion_deltaredshift = 0.5
-
         self.yhe = constants.yhe
         self.mass_ratio_He_H = constants.mass_ratio_He_H
         self.fHe = self.yhe/(self.mass_ratio_He_H * (1.0 - self.yhe))
+
+        self.xe_helium_second = SecondHelium().xe
 
         self.xstart = 0.0 # TODO might wanna do something with this
 
     def get_xe_func(self, zre):
         def xe_func(z, zre=zre):
-            return (self.xe_hydrogen(z, zre) + self.xe_helium(z))
+            return (self.xe_hydrogen(z, zre) + self.xe_helium_second(z))
         return xe_func
 
-    def xe_helium(self, z):
-        """Second ionization of helium used in the fiducial model
-        for PCs following default from CAMB. """
-        xod = (1.0+self.helium_fullreion_redshift - (1.0+z))\
-            /self.helium_fullreion_deltaredshift
-        xe_helium = self.fHe * (1.0 + np.tanh(xod))/2.0
-        return xe_helium
-
     def xe_hydrogen(self, z, zre):
+        """Hydrogen + singly ionized helium"""
 
         (WindowVarDelta, WindowVarMid) = self._get_yvar(zre) #TODO change name
         xod = (WindowVarMid - (1.0+z)**self.reion_zexp)/WindowVarDelta

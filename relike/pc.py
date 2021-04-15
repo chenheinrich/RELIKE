@@ -5,7 +5,9 @@ from scipy import interpolate
 
 from .data_loader import DataLoader
 from . import constants
+from .second_helium import SecondHelium
 from .utils.logging import class_logger
+
 class PC():
 
     def __init__(self, dataset='pl18_zmax30'):
@@ -65,8 +67,6 @@ class PC():
         plt.savefig(plot_name)
         print('Saved plot: {}\n'.format(plot_name))
 
-
-
 class PCData():
 
     def __init__(self, dataset='pl18_zmax30'):
@@ -88,9 +88,10 @@ class PCData():
         self.xef = 0.15
         self.xe_lowz = self._get_xe_lowz()
 
+        self.xe_helium_second = SecondHelium().xe
+
         self.xe_mjs_func = [self._get_func_xe_mjs(j) for j in range(self.npc)]
         self.xe_fid_func = self._get_func_xe_fid()
-        self.xe_fid_func2 = np.vectorize(self.xe_fid_func_single_input)
     
     def _load_z_and_pc(self):
         data = self._data_loader.load_file('pc.dat') # TODO make sure to flip sign ahead of time
@@ -109,6 +110,7 @@ class PCData():
 
     def _get_func_xe_fid(self):
         """Returns a function that interpolates the fiducial xe(z)."""
+        
         values = np.array([\
                 [0,          self.xe_lowz],\
                 [self.zmin,  self.xe_lowz], \
@@ -117,7 +119,21 @@ class PCData():
                 [self.zmax,  0.0], \
                 [self.zmax+10,  0.0]\
             ])
-        return interpolate.interp1d(values[:,0], values[:,1], kind='linear')
+        xe_fid_func_no_helium = interpolate.interp1d(values[:,0], values[:,1], kind='linear') 
+        
+        def xe_fid_func(z):
+            xe = xe_fid_func_no_helium(z) + self.xe_helium_second(z)
+            return xe
+
+        return xe_fid_func
+
+    #def xe_helium_second(self, z):
+    #    """Second ionization of helium used in the fiducial model
+    #    for PCs following default from CAMB. """
+    #    xod = (1.0+self.helium_fullreion_redshift - (1.0+z))\
+    #        /self.helium_fullreion_deltaredshift
+    #    xe_helium_second = self.fHe * (1.0 + np.tanh(xod))/2.0
+    #    return xe_helium_second
 
     def xe_fid_func_single_input(self, z):
         """Returns a function that interpolates the fiducial xe(z)."""

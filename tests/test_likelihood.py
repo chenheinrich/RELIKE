@@ -9,7 +9,7 @@ gauss_like = rel.GaussianLikelihood()
 tanh_model = rel.TanhModel()
 
 def test_get_mjs():
-    xe_func = tanh_model.get_xe_func(zre=8.27789306640625, no_helium=True)
+    xe_func = tanh_model.get_xe_func(zre=8.27789306640625)
     mjs = pc.get_mjs(xe_func)
     mjs_exp = np.array([ -0.122551897483178, \
         -3.983205659237149E-003, \
@@ -20,14 +20,14 @@ def test_get_mjs():
     assert np.allclose(mjs, mjs_exp)
 
 def test_get_loglike():
-    xe_func = tanh_model.get_xe_func(zre=8.27789306640625, no_helium=True)
+    xe_func = tanh_model.get_xe_func(zre=8.27789306640625)
     mjs = pc.get_mjs(xe_func)
     loglike = gauss_like.get_loglike(mjs)
     expected = -0.4484532654700968
     assert np.allclose(loglike, expected)
 
 def test_plotting():
-    xe_func = tanh_model.get_xe_func(zre=8.27789306640625, no_helium=True)
+    xe_func = tanh_model.get_xe_func(zre=8.27789306640625)
     fn_xe = './tests/data/xe.dat'
     data = np.genfromtxt(fn_xe)
     zarray = data[:,0]

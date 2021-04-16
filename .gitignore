@@ -13,6 +13,8 @@ plots
 *egg-info
 .pytest_cache
 *.ipynb_checkpoints
+build
+dist
 
 #MAC
 *.DS_Store

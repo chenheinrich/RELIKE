@@ -1,0 +1,2 @@
+include relike/data/*.data
+include relike/data/*.yaml

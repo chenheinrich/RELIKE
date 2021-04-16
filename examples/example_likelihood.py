@@ -5,19 +5,6 @@ import os
 
 import relike
 
-def example_profiling(xe_func=None):
-    
-    pc = relike.PC()
-    if xe_func is None:
-        tanh_model = relike.TanhModel()
-        xe_func = tanh_model.get_xe_func(zre=7.1)
-
-    @profiler
-    def get_mjs(func):
-        [pc.get_mjs(func) for i in range(1000)]
-
-    get_mjs(xe_func)  
-
 def example_plot_pc():
     print('Example 3: Plot PCs and the fiducial xe function used for PCs.\n')
     pc = relike.PC()

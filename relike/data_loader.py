@@ -1,6 +1,7 @@
 import os
 import numpy as np
 import yaml
+import pkg_resources
 
 class DataLoader():
 

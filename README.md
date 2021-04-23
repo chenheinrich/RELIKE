@@ -27,11 +27,11 @@ v1.0 (coming soon)
 
   `git clone --recurse-submodules https://github.com/chenheinrich/RELIKE.git`
 
-- If you don't want `CosmoMC-relike` for now, just do: 
+- If you don't want `CosmoMC-relike` for now, just `git clone` and if you change your mind later, use
 
-  `git clone https://github.com/chenheinrich/RELIKE.git` and use
-
-  `git submodule update --init --recursive` if you change your mind later.
+  `git submodule update --init --recursive`
+  
+- To stay updated, use `git submodule update --remote --merge` beside `git pull`.
 
 
 ### Installing `relike`: Python Likelihood Package

@@ -17,7 +17,7 @@ Reference: Heinrich & Hu 2021 (arxiv: _fill in_)
 
 v1.0
 - Added **`relike`**: a standalone python likelihood package.
-- Added **`CosmoMC-relike`**: a MCMC implementation using CosmoMC sampler. 
+- Added **`CosmoMC-relike`**: an MCMC implementation using the CosmoMC sampler. 
 - Supporting arbitrary xe(z) specified by the user between _6 < z < zmax_, where zmax = 30; assuming fully reionized hydrogen for _z < 6_.
 - Planck likelihoods used: plik_lite_TTTEEE + lowl + srollv2.
 
@@ -76,10 +76,13 @@ This is a standalone python likelihood package, outputting the Planck likelihood
 
 CosmoMC-relike uses the generic sampler of CosmoMC to sample the fortran implementation of the `relike` likelihood. 
 
-See installation instructions at [CosmoMC-relike] (https://github.com/chenheinrich/CosmoMC-relike/tree/develop#readme)
-
 You may need to update all submodules recursively like this:
 
   `git submodule update --init --recursive` 
+  
+  `cd CosmoMC-relike`
+  
+See further installation instructions at [CosmoMC-relike](https://github.com/chenheinrich/CosmoMC-relike/tree/develop#readme)
+
   
   

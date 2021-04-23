@@ -18,7 +18,7 @@ def example_likelihood_single_model():
     tanh_model = relike.TanhModel() #tanh model with dz = 0.015(1+z)
 
     # Get PC amplitudes and log-likelihood for a tanh model 
-    zre = 10.0 #8.27789306640625 
+    zre = 10.0 # 8.27789306640625  #HACK put back to
     xe_func = tanh_model.get_xe_func(zre=zre)
     mjs = pc.get_mjs(xe_func)
     loglike = gauss_like.get_loglike(mjs)

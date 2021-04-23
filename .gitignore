@@ -1,6 +1,7 @@
 #debug
 CosmoMC
 examples/chen/
+.travis.yaml
 
 # Outputs
 *.pdf

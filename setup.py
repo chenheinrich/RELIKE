@@ -5,7 +5,9 @@ setup(
     version='0.0.1',
     author='Chen Heinrich',
     author_email='chenhe@caltech.edu',
-    description=('Python package for the Reionization Effective Likelihood (RELIKE) from Planck 2018 data'),
+    description=('Python package for the Reionization Effective Likelihood (RELIKE) from Planck data'),
+    long_description=open('DESCRIPTION.rst').read(),
+    long_description_content_type = text/rst,
     url='https://github.com/chenheinrich/RELIKE',
     license='BSD',
 
@@ -18,6 +20,5 @@ setup(
     install_requires=['scipy>=1.6.0', 'numpy>=1.18.5', 
         'pytest>=5.4.3', 'profiler>=0.1.0'],
     python_requires='>=3.6',
-    include_package_data=True,
     package_data={"": ["data/*.dat", "data/*.yaml"]},
     )

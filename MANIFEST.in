@@ -1,2 +1,3 @@
-include relike/data/*.data
-include relike/data/*.yaml
+!include relike/data/*.data
+!include relike/data/*.yaml
+include DESCRIPTION.rst

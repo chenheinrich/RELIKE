@@ -15,7 +15,7 @@ Reference: Heinrich & Hu 2021 (arxiv: _fill in_)
 
 ## Release Note
 
-v1.0
+v1.0 (coming soon)
 - Added **`relike`**: a standalone python likelihood package.
 - Added **`CosmoMC-relike`**: an MCMC implementation using the CosmoMC sampler. 
 - Supporting arbitrary xe(z) specified by the user between _6 < z < zmax_, where zmax = 30; assuming fully reionized hydrogen for _z < 6_.

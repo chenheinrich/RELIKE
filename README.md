@@ -76,7 +76,7 @@ This is a standalone python likelihood package, outputting the Planck likelihood
 
 CosmoMC-relike uses the generic sampler of CosmoMC to sample the fortran implementation of the `relike` likelihood. 
 
-See installation instructions at CosmoMC-relike (https://github.com/chenheinrich/CosmoMC-relike/tree/develop#readme)
+See installation instructions at [CosmoMC-relike] (https://github.com/chenheinrich/CosmoMC-relike/tree/develop#readme)
 
 You may need to update all submodules recursively like this:
 

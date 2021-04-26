@@ -15,9 +15,9 @@ Reference: Heinrich & Hu 2021 (arxiv: _fill in_)
 
 ## Release Note
 
-v1.0
+v1.0 (coming soon)
 - Added **`relike`**: a standalone python likelihood package.
-- Added **`CosmoMC-relike`**: a MCMC implementation using CosmoMC sampler. 
+- Added **`CosmoMC-relike`**: an MCMC implementation using the CosmoMC sampler. 
 - Supporting arbitrary xe(z) specified by the user between _6 < z < zmax_, where zmax = 30; assuming fully reionized hydrogen for _z < 6_.
 - Planck likelihoods used: plik_lite_TTTEEE + lowl + srollv2.
 
@@ -31,7 +31,7 @@ v1.0
 
 - If you also want `CosmoMC-relike` (now or later), use
 
-  `git submodule update --init --recursive` <CH: Currently not working; use python only for now>
+  `git submodule update --init --recursive` 
 
   See the `CosmoMC-relike` section for how to install this code. 
 
@@ -74,44 +74,15 @@ This is a standalone python likelihood package, outputting the Planck likelihood
 
 ### Installing `CosmoMC-relike`: MCMC Sampler + relike in Fortran 
 
-<CH: The part of the code is still under construction>
+CosmoMC-relike uses the generic sampler of CosmoMC to sample the fortran implementation of the `relike` likelihood. 
 
-CosmoMC-relike uses the generic sampler of CosmoMC to sample the fortran implementation of the `relike` likelihood. For more information on CosmoMC and getdist (the plotting package), see https://cosmologist.info/cosmomc/readme.html.
+You may need to update all submodules recursively like this:
 
-- Install/Load MPI (optional)
-
-  It is recommended to load/install MPI for running chains. To do so
+  `git submodule update --init --recursive` 
   
-  - On a cluster: Find and load the MPI module (e.g. `openmpi`, `mpich` or `pmi`) on the cluster using `module avail` and `module load XX`; consult the cluster’s user guidelines).
-  - On a laptop: Install OpenMPI (https://www.open-mpi.org/) using your system’s package manager (`sudo apt install libopenmpi` in Debian-based systems)
-
-- If `CosmoMC-relike` is empty, you probably need to get the git submodule via: 
-
-  `git submodule update --init --recursive` <CH: Currently not working; use python only for now>
-
-- Compile the code: 
-
-  `cd CosmoMC-relike/cosmomc`
+  `cd CosmoMC-relike`
   
-  `make`
-  
-- Untar the chain files used for KDE:
+See further installation instructions at [CosmoMC-relike](https://github.com/chenheinrich/CosmoMC-relike/tree/develop#readme)
 
-  `cd kde_data/pl18_zmax30`
   
-  `tar -zxvf chains.tar.gz`
-  
-  `cd ../../`
-
-- Run an example by outputting a single point: <insert file>
-
-  `./cosmomc example_tanh_kde_single_point.ini`
-
-- Run an example of tanh chains in Gaussian mode: <insert file>
-
-  `./cosmomc example_tanh_gauss_chains.ini`
-  
-  or with MPI:
-  
-  `mpirun -np 4 ./cosmomc example_tanh_gauss_chains.ini`
   

@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-# read the contents of your README file
+# read the contents of DESCRIPTION.rst
 from os import path
 this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, 'DESCRIPTION.rst')) as f:
@@ -26,10 +26,8 @@ setup(
     install_requires=['scipy>=1.6.0', 
         'numpy>=1.18.5', 
         'matplotlib>=3.4.1',
-        'pyyaml>=5.3.1'],
+        'pyyaml>=5.3.1',
+        'pytest>=5.4.3'],
     python_requires='>=3.8',
     package_data={"relike": ["data/pl18_zmax30/*"]},
-    #entry_points={
-    #    'console_scripts': ['tanh=relike.example_likelihood:main']
-    #},
     )

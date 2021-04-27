@@ -1,6 +1,5 @@
 numpy>=1.18.5
 scipy>=1.6.0
-pytest>=5.4.3
-profiler>=0.1.0
 matplotlib>=3.4.1
 pyyaml>=5.3.1
+pytest>=5.4.3

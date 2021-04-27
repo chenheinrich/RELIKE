@@ -27,11 +27,17 @@ def test_get_loglike():
     assert np.allclose(loglike, expected)
 
 def test_plotting():
-    xe_func = tanh_model.get_xe_func(zre=8.27789306640625)
-    fn_xe = './tests/data/xe.dat'
+
+    import os 
+    this_dir = os.path.dirname(__file__)
+    fn_xe = os.path.join(this_dir, 'data/xe.dat')
     data = np.genfromtxt(fn_xe)
+    
     zarray = data[:,0]
     xe_expected = data[:,1]
+
+    xe_func = tanh_model.get_xe_func(zre=8.27789306640625)
+
     assert np.allclose(xe_func(zarray), xe_expected)
 
 #TODO 

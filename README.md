@@ -67,7 +67,7 @@ This is a standalone python likelihood package, outputting the Planck likelihood
 
 - To run example script (same as in the demo Jupyter notebook): 
 
-  `python3 examples/example_likelihood.py`
+  `python3 examples/example.py`
 
   This will run two examples: 1) print the relative chi-squared of an example tanh model relative to the Planck 2018 best-fit tanh model; 2) calculate and plot the optical depth posterior in the tanh model using relike.
 

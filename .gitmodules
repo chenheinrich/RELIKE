@@ -1,1 +1,4 @@
 
+[submodule "CosmoMC-RELIKE"]
+	path = CosmoMC-RELIKE
+	url = https://github.com/chenheinrich/CosmoMC-RELIKE.git

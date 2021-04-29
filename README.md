@@ -18,7 +18,7 @@ Reference: Heinrich & Hu 2021 (arxiv: _coming soon_)
 
 v0.0.1 
 - Added **`RELIKE`**: a standalone python likelihood package (supporting **only python3**).
-- Added **`CosmoMC-relike`**: an MCMC implementation using the CosmoMC sampler. 
+- Added **`CosmoMC-RELIKE`**: an MCMC implementation using the CosmoMC sampler. 
 - Supporting arbitrary xe(z) specified by the user between _6 < z < zmax_, where zmax = 30; assuming fully reionized hydrogen for _z < 6_.
 - Planck likelihoods used: plik_lite_TTTEEE + lowl + srollv2.
 
@@ -28,7 +28,7 @@ v0.0.1
 
   `git clone --recurse-submodules https://github.com/chenheinrich/RELIKE.git`
 
-- If you don't want `CosmoMC-relike` for now, just `git clone` and if you change your mind later, use
+- If you don't want `CosmoMC-RELIKE` for now, just `git clone` and if you change your mind later, use
 
   `git submodule update --init --recursive`
   
@@ -71,9 +71,9 @@ This is a standalone python likelihood package, outputting the Planck likelihood
 
   This will run two examples: 1) print the relative chi-squared of an example tanh model relative to the Planck 2018 best-fit tanh model; 2) calculate and plot the optical depth posterior in the tanh model using relike.
 
-### Installing `CosmoMC-relike`: MCMC Sampler + relike in Fortran 
+### Installing `CosmoMC-RELIKE`: MCMC Sampler + relike in Fortran 
 
-CosmoMC-relike uses the generic sampler of CosmoMC to sample the fortran implementation of the `relike` likelihood. 
+CosmoMC-RELIKE uses the generic sampler of CosmoMC to sample the fortran implementation of the `relike` likelihood. 
 
 You may need to update all submodules recursively like this:
 
@@ -81,7 +81,7 @@ You may need to update all submodules recursively like this:
   
   `cd CosmoMC-relike`
   
-See further installation instructions at [CosmoMC-relike](https://github.com/chenheinrich/CosmoMC-relike/tree/develop#readme)
+See further installation instructions at [CosmoMC-RELIKE](https://github.com/chenheinrich/CosmoMC-RELIKE)
 
 
   

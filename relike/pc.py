@@ -6,13 +6,10 @@ from scipy import interpolate
 from .data_loader import DataLoader
 from . import constants
 from .second_helium import SecondHelium
-from .utils.logging import class_logger
 
 class PC():
 
     def __init__(self, dataset='pl18_zmax30'):
-
-        self._logger = class_logger(self)
 
         self.dataset = dataset
         self._data_loader = DataLoader(self.dataset)
@@ -70,8 +67,6 @@ class PC():
 class PCData():
 
     def __init__(self, dataset='pl18_zmax30'):
-
-        self._logger = class_logger(self)
 
         self.dataset = dataset
         self._data_loader = DataLoader(self.dataset)
@@ -258,8 +253,6 @@ class PCProj():
 
     def __init__(self, dataset='pl18_zmax30'):
 
-        self._logger = class_logger(self)
-
         self.pc_data = PCData(dataset)
 
     def get_mjs(self, xe_func, n_simpson=1000):
@@ -295,8 +288,6 @@ class PCTau():
 
     def __init__(self, dataset='pl18_zmax30'):
 
-        self._logger = class_logger(self)
-
         self._dataset = dataset
         self._data_loader = DataLoader(self._dataset)
 
@@ -309,8 +300,8 @@ class PCTau():
 
         self._tau_prefactor_fid = self._get_tau_prefactor_fid()
 
-        self._logger.debug('Using fiducial cosmology for \
-            tau estimation with PC: {}\n'.format(self._cosmo_fid))
+        #print('Fiducial cosmology '+
+        #    '(used for tau estimation with PC): {}\n'.format(self._cosmo_fid))
 
     def _load_taufid_and_taumj(self):
         taumj = self._data_loader.load_file('taumj.dat') 

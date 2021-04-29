@@ -8,15 +8,16 @@ with open(path.join(this_directory, 'DESCRIPTION.rst')) as f:
 
 setup(
     name="relike", 
-    version='0.0.1',
+    version='0.0.4',
     author='Chen Heinrich',
     author_email='chenhe@caltech.edu',
-    description='Python package for the Reionization Effective Likelihood (RELIKE) from Planck data',
+    description='Python package for the Reionization Effective Likelihood (relike) from Planck data',
     long_description_content_type="text/x-rst",
     long_description=long_description,
-    url='https://github.com/chenheinrich/RELIKE',
+    url='https://github.com/chenheinrich/relike',
 
     packages=find_packages(include=['relike', 'relike.*']),
+
     classifiers=[
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',

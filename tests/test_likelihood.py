@@ -1,4 +1,3 @@
-#TODO To write
 import pytest
 import numpy as np
 

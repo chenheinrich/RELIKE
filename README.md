@@ -2,8 +2,7 @@
 
 RELIKE (Reionization Effective Likelihood) is a fast and accurate likelihood code that compresses the final Planck 2018 likelihoods for the purpose of constraining models of the global ionization history.
 
-- Using the **python package `relike`**, you can obtain the likelihood of any model of ionization history _xe(z)_ in the range
-6 < z < zmax. 
+- Using the **python package `relike`**, you can obtain the likelihood of any model of ionization history _xe(z)_ in the range 6 < z < zmax. 
 
 - The `relike` code works by projecting the model onto the principal components (PC) of ionization history in the CMB data for its PC amplitudes _mj_'s, which are used to quickly return the effective likelihood of the model; you may also use it to evaluate the likelihood at multiple points and plot the parameter posteriors (assuming flat prior in the parameter). 
 
@@ -18,7 +17,7 @@ Reference: Heinrich & Hu 2021 (arxiv: _coming soon_)
 ## Release Note
 
 v0.0.1 
-- Added **`RELIKE`**: a standalone python likelihood package.
+- Added **`RELIKE`**: a standalone python likelihood package (supporting **only python3**).
 - Added **`CosmoMC-relike`**: an MCMC implementation using the CosmoMC sampler. 
 - Supporting arbitrary xe(z) specified by the user between _6 < z < zmax_, where zmax = 30; assuming fully reionized hydrogen for _z < 6_.
 - Planck likelihoods used: plik_lite_TTTEEE + lowl + srollv2.
@@ -48,15 +47,15 @@ This is a standalone python likelihood package, outputting the Planck likelihood
 
   `cd RELIKE`
 
-  `pip install -r requirements.txt` (add `--user` when working on a cluster if you don't have a virual environment activated)
+  `pip3 install -r requirements.txt` (add `--user` when working on a cluster if you don't have a virual environment activated)
 
 - Install `relike`:
 
-  `pip install .`
+  `pip3 install .`
 
   For editable install: 
   
-  `pip install -e .`
+  `pip3 install -e .`
 
 - To run tests: 
 

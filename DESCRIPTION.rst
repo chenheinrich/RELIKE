@@ -1,11 +1,11 @@
 ===================
 RELIKE 
 ===================
-:RELIKE: Reionization Effective Likelihood from CMB Large-Scale Polarization
+:RELIKE: Reionization Effective Likelihood from CMB 
 :Author: Chen Heinrich
 :Homepage: https://github.com/chenheinrich/RELIKE
 
-If you use this code, please cite `Heinrich & Hu 2021 <arxiv link to be added>`.
+If you use this code, please cite `Heinrich & Hu 2021`.
 
 
 Description and installation
@@ -32,10 +32,3 @@ If you want to modify the source code, you can install in the editable mode::
 
     pip install -e . [--user]
 
-
-Branches
-=============================
-
-The master branch contains latest changes to the main release version.
-
-The develop branch contains the latest less-stable features in development.

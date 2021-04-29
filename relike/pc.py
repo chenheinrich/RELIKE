@@ -127,14 +127,6 @@ class PCData():
 
         return xe_fid_func
 
-    #def xe_helium_second(self, z):
-    #    """Second ionization of helium used in the fiducial model
-    #    for PCs following default from CAMB. """
-    #    xod = (1.0+self.helium_fullreion_redshift - (1.0+z))\
-    #        /self.helium_fullreion_deltaredshift
-    #    xe_helium_second = self.fHe * (1.0 + np.tanh(xod))/2.0
-    #    return xe_helium_second
-
     def xe_fid_func_single_input(self, z):
         """Returns a function that interpolates the fiducial xe(z)."""
         
@@ -190,7 +182,6 @@ class PCData():
 
         ax.plot(zarray, self.xe_fid_func(zarray), '-', color='tab:orange', lw=1,\
             label=r'$x_e^{\mathrm{fid}}(z)$')
-        #ax.plot(zarray, self.xe_fid_func2(zarray), '--', lw=1)
         ax.legend()
 
         ax.axvline(x=self.zmin, color='k', lw=1)
@@ -211,10 +202,10 @@ class PCData():
             xe_func=None, label_xe_from_func=None, \
             nz_test=1000):
 
-        """Saves a plot of xe(z) given input mjs and fiducial xe for PCs.
-        - If xe_file_name is specified, it plots also xe(z) from the file
+        """Saves a plot of xe(z) given input mjs.
+        - If xe_file_name is specified, it also plots xe(z) from the file
          which should be in the form of two columns: z and xe(z). 
-        - If xe_func is specified, it plots also xe(z) between 0 and zmax+5, 
+        - If xe_func is specified, it also plots xe(z) between 0 and zmax+5, 
           where zmax is the PC zmax. 
         """
         
@@ -364,10 +355,7 @@ class PCTau():
                 code does not support cosmologies inconsistent with 
                 Planck 2018). When use_fiducial_cosmology = False, you also
                 need to specify omegabh2, omegamh2 and yheused all at the 
-                same time, and the returned tau will be scaled accordingly.
-
-                docstring for this function explain there is a rescaling used 
-                for evaluating tau at a different cosmology, but be careful that loglike code does not deal with cosmologies inconsistent with Planck 2018.>
+                same time, and the returned tau will be scaled accordingly. 
             omegabh2 (optional): A float or a numpy array for baryon density;
                 used when use_fiducial_cosmology = False.
             omegamh2 (optional): A float or a numpy array for matter density;
@@ -391,8 +379,14 @@ class PCTau():
         """Returns cumulative optical depth tau(>z) estimated using PC projection.
         Args:
             mjs: A 1d numpy array of size npc.
-            use_fiducial_cosmology: A boolean for whether you want to use the fiducial 
-                cosmology; if False, you need to set omegabh2, omegamh2 and yheused.
+            use_fiducial_cosmology (optional): A boolean for whether you 
+                want to use the fiducial cosmology or a different set of 
+                cosmological parameters, ONLY for the purpose of rescaling 
+                tau for a different cosmology; BE CAREFUL that the loglike
+                code does not support cosmologies inconsistent with 
+                Planck 2018). When use_fiducial_cosmology = False, you also
+                need to specify omegabh2, omegamh2 and yheused all at the 
+                same time, and the returned tau will be scaled accordingly. 
             omegabh2 (optional): A float or a numpy array for baryon density;
                 used when use_fiducial_cosmology = False.
             omegamh2 (optional): A float or a numpy array for matter density;
@@ -414,7 +408,6 @@ class PCTau():
             tau_cum *= self._get_tau_rescale(omegabh2, omegamh2, yheused)
         
         return (self._zarray_cum, tau_cum)
-        #TODO code duplication to be removed
 
     def _get_tau_rescale(self, omegabh2, omegamh2, yheused): 
         """Returns a scalar for the rescaling of tau due to different cosmo parameters."""

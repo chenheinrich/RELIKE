@@ -26,7 +26,7 @@ def test_get_loglike():
     expected = 0.009721218348963334
     assert np.allclose(loglike, expected)
 
-def test_plotting():
+def test_xe_tanh():
 
     import os 
     this_dir = os.path.dirname(__file__)
@@ -40,7 +40,4 @@ def test_plotting():
 
     assert np.allclose(xe_func(zarray), xe_expected)
 
-#TODO 
-# def test_tau(xe_func):
-#   tau_expected = 0.06
-
+#TODO add test_get_tau()

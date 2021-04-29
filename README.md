@@ -1,6 +1,6 @@
-# Reionization Effective Likelihood
+# RELIKE: Reionization Effective Likelihood
 
-The Reionization Effective Likelihood (RELIKE) is a fast and accurate likelihood code that compresses the final Planck 2018 likelihoods for the purpose of constraining models of the global ionization history.
+RELIKE (Reionization Effective Likelihood) is a fast and accurate likelihood code that compresses the final Planck 2018 likelihoods for the purpose of constraining models of the global ionization history.
 
 - Using the **python package `relike`**, you can obtain the likelihood of any model of ionization history _xe(z)_ in the range
 6 < z < zmax. 
@@ -11,12 +11,14 @@ The Reionization Effective Likelihood (RELIKE) is a fast and accurate likelihood
 
 - Note that there are two modes of effective likelihoods: 1) kernel density estimate (KDE) mode, which is slightly more accurate, and 2) the Gaussian approximation mode, which is good enough for most models. The python `relike` contains the Gaussian mode only, while the fortran implementation in `CosmoMC-relike` has both. 
 
-Reference: Heinrich & Hu 2021 (arxiv: _fill in_)
+- The master branch contains latest changes to the main release version. The develop branch contains the latest less-stable features in development.
+
+Reference: Heinrich & Hu 2021 (arxiv: _coming soon_)
 
 ## Release Note
 
-v1.0 (coming soon)
-- Added **`relike`**: a standalone python likelihood package.
+v0.0.1 
+- Added **`RELIKE`**: a standalone python likelihood package.
 - Added **`CosmoMC-relike`**: an MCMC implementation using the CosmoMC sampler. 
 - Supporting arbitrary xe(z) specified by the user between _6 < z < zmax_, where zmax = 30; assuming fully reionized hydrogen for _z < 6_.
 - Planck likelihoods used: plik_lite_TTTEEE + lowl + srollv2.
@@ -81,6 +83,7 @@ You may need to update all submodules recursively like this:
   `cd CosmoMC-relike`
   
 See further installation instructions at [CosmoMC-relike](https://github.com/chenheinrich/CosmoMC-relike/tree/develop#readme)
+
 
   
   

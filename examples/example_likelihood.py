@@ -17,8 +17,8 @@ def example_likelihood_single_model():
     gauss_like = relike.GaussianLikelihood()
     tanh_model = relike.TanhModel() #tanh model with dz = 0.015(1+z)
 
-    # Get PC amplitudes and log-likelihood for a tanh model 
-    zre = 10.0 # 8.27789306640625  #HACK put back to
+    # Get PC amplitudes and log-likelihood for a tanh model (normalized to Planck best-fit)
+    zre = 10.0 
     xe_func = tanh_model.get_xe_func(zre=zre)
     mjs = pc.get_mjs(xe_func)
     loglike = gauss_like.get_loglike(mjs)
@@ -40,12 +40,8 @@ def example_likelihood_single_model():
     # Plot cumulative tau exact vs PC projection 
     pc.plot_tau_cumulative(mjs, plot_name='./plot_tau_cumulative.pdf')
 
-    # Print total tau: exact vs from PC projection
-    #tau_pc = pc.get_tau(mjs) #TODO to be polished
-    #tau_exact = .059997 #TODO need to update for a zre = 10.0
-    #print('tau exact vs PC: {} vs {}\n'.format(tau_exact, tau_pc)) 
 
-def example_posterior(): #Plot out tanh posterior (evaluated w/ Gaussian likelihood at points)
+def example_posterior(): 
     
     print('Example 2: Plot posterior for a one-parameter model: tanh model\n')
 

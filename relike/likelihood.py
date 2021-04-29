@@ -18,10 +18,7 @@ class GaussianLikelihood():
             mjs: 1d-numpy array of shape (5,) for the first 5 PC amplitudes.
         """
 
-        if mjs.shape != (self._npc,):
-            pass
-            #TODO raise error 
-        #chi2 = np.matmul(mjs[np.newaxis,:], np.matmul(self._invcov, mjs[:, np.newaxis]))
+        #TODO raise error if mjs.shape != (self._npc,):
 
         dmjs = mjs - self._mjs_mean
         loglike = -0.5 * np.matmul(dmjs, np.matmul(self._invcov, np.transpose(dmjs)))

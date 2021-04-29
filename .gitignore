@@ -16,6 +16,7 @@ plots
 *.ipynb_checkpoints
 build
 dist
+*.pyc
 
 #MAC
 *.DS_Store

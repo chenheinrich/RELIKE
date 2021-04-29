@@ -15,13 +15,13 @@ setup(
     long_description_content_type="text/x-rst",
     long_description=long_description,
     url='https://github.com/chenheinrich/RELIKE',
-    license='BSD',
 
     packages=find_packages(include=['relike', 'relike.*']),
     classifiers=[
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.8',
+        'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
     ],
     install_requires=['scipy>=1.6.0', 
         'numpy>=1.18.5', 

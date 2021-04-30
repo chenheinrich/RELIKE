@@ -12,7 +12,7 @@ RELIKE (Reionization Effective Likelihood) is a fast and accurate likelihood cod
 
 - The master branch contains latest changes to the main release version. The develop branch contains the latest less-stable features in development.
 
-Reference: Heinrich & Hu 2021 (arxiv: _coming soon_)
+Reference: Heinrich & Hu 2021 (https://arxiv.org/abs/2104.13998)
 
 ## Release Note
 

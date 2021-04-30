@@ -9,8 +9,8 @@ RELIKE (Reionization Effective Likelihood) is a fast and accurate likelihood cod
 - To run an MCMC chain, you can either **use the `relike` python package from inside of a sampler** (e.g. Cobaya or Cosmosis), or use our release of **`CosmoMC-RELIKE`** which has an implementation of the relike code in fortran (both in KDE and Gaussian modes) used to produce published results. 
 
 - Note that there are two modes of effective likelihoods, both are sufficiently accurate: 
-    - 1) the kernel density estimate (KDE) mode, which is slightly more accurate;
-    - 2) the Gaussian approximation mode which is faster and also accurate. The python `relike` contains the Gaussian mode only, while `CosmoMC-RELIKE` has both. 
+    - the kernel density estimate (KDE) mode, which is slightly more accurate;
+    - the Gaussian approximation mode which is faster and also accurate. The python `relike` contains the Gaussian mode only, while `CosmoMC-RELIKE` has both. 
 
 - The master branch contains latest changes to the main release version. The develop branch contains the latest less-stable features in development.
 

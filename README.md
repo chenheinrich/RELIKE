@@ -39,7 +39,7 @@ v0.0.1
 
 ### Installing `relike`: Python Likelihood Package
 
-**NEW: You can now install with a simple `pip install relike`**. Note that we only support python3, so use pip3 and python3 if that's not your default python version. **Once done, you can skip to "run tests" after `cd RELIKE`**. 
+**NEW: You can now install with a simple `pip install relike`**. Note that we only support python3, so use pip3 and python3 if that's not your default python version. **Once done, you can skip to "Running `relike`" after `cd RELIKE`**. To install from source, use the following.
 
 - Install requirements first: 
 
@@ -58,6 +58,8 @@ v0.0.1
   For editable install: 
   
   `pip3 install -e .`
+
+### Running `relike`:
 
 - To run tests: 
 

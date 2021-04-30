@@ -21,7 +21,7 @@ If you use this code, please cite Heinrich & Hu 2021 (https://arxiv.org/abs/2104
 v0.0.1 
 - Added **`RELIKE`**: a standalone python likelihood package (supporting **only python3**).
 - Added **`CosmoMC-RELIKE`**: an MCMC implementation using the CosmoMC sampler. 
-- Supporting arbitrary xe(z) specified by the user between _6 < z < zmax_, where zmax = 30; assuming fully reionized hydrogen for _z < 6_.
+- Supporting arbitrary xe(z) specified by the user between _6 < z < 30; assuming fully reionized hydrogen and singly ionized helium at _z < 6_.
 - Planck likelihoods used: `plik_lite_TTTEEE + lowl + Sroll2`.
 
 ## Getting Started

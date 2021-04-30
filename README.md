@@ -4,7 +4,7 @@ RELIKE (Reionization Effective Likelihood) is a fast and accurate likelihood cod
 
 - Using the **python package `relike`**, you can obtain the likelihood of any model of ionization history _xe(z)_ in the range 6 < z < zmax. 
 
-- The `relike` code works by projecting the model onto the principal components (PC) of ionization history in the CMB data for its PC amplitudes _mj_'s, which are used to quickly **return the effective likelihood of the model**; you may also use it to evaluate the likelihood at multiple points and plot the parameter posteriors (assuming flat prior in the parameter). 
+- The `relike` code works by projecting the model onto the principal components (PC) of ionization history in the CMB data for its PC amplitudes _mj_'s, which are used to quickly **return the effective likelihood of the model**; you may also use it to evaluate the likelihood at multiple points and plot the parameter posteriors. 
 
 - To run an MCMC chain, you can either **use the `relike` python package from inside of a sampler** (e.g. Cobaya or Cosmosis), or use our release of **`CosmoMC-RELIKE`** which has an implementation of the relike code in fortran (both in KDE and Gaussian modes) used to produce published results. 
 

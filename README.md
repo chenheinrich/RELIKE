@@ -79,7 +79,7 @@ You may need to update all submodules recursively like this:
 
   `git submodule update --init --recursive` 
   
-  `cd CosmoMC-relike`
+  `cd CosmoMC-RELIKE`
   
 See further installation instructions at [CosmoMC-RELIKE](https://github.com/chenheinrich/CosmoMC-RELIKE)
 

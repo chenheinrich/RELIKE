@@ -41,7 +41,6 @@ class PC():
 
         zmin =  0
         zmax = self.data.zmax+5
-        #zarray = np.linspace(zmin, zmax, nz_test)
 
         assert mjs.size == self.data.npc, (mjs.size, self.data.npc)
         
@@ -89,7 +88,7 @@ class PCData():
         self.xe_fid_func = self._get_func_xe_fid()
     
     def _load_z_and_pc(self):
-        data = self._data_loader.load_file('pc.dat') # TODO make sure to flip sign ahead of time
+        data = self._data_loader.load_file('pc.dat') 
         z = data[:,0]
         pc = data[:,1:]
         return (z, pc)
@@ -192,7 +191,7 @@ class PCData():
             plt.savefig(plot_file_name)
             print('Saved plot: {}\n'.format(plot_file_name))
 
-    def plot_xe(self, mjs, plot_name='./plot_xe.pdf', \
+    def plot_xe(self, mjs, plot_name='plot_xe.pdf', \
             xe_file_name=None, label_xe_from_file=None, \
             xe_func=None, label_xe_from_func=None, \
             nz_test=1000):
@@ -305,7 +304,7 @@ class PCTau():
 
     def _load_taufid_and_taumj(self):
         taumj = self._data_loader.load_file('taumj.dat') 
-        taufid = self._data_loader.load_file('taufid.dat') #xe_helium included
+        taufid = self._data_loader.load_file('taufid.dat') 
         return (taufid, taumj)
 
     def _load_zarray_and_taufid_and_taumj_cum(self):
@@ -313,7 +312,7 @@ class PCTau():
         2d numpy array of shape (nz, npc) for taumj cumulative."""
 
         taumj_cum = self._data_loader.load_file('taumj_cumulative.dat') 
-        taufid_cum = self._data_loader.load_file('taufid_cumulative.dat') #xe_helium included
+        taufid_cum = self._data_loader.load_file('taufid_cumulative.dat') 
     
         self._check_zarray_are_same(taufid_cum[:,0], taumj_cum[:,0])
         zarray = taufid_cum[:,0]
@@ -367,7 +366,8 @@ class PCTau():
         return tau
 
     def get_tau_cumulative(self, mjs, use_fiducial_cosmology, omegabh2=None, omegamh2=None, yheused=None):
-        """Returns cumulative optical depth tau(>z) estimated using PC projection.
+        """Returns z and the cumulative optical depth tau(>z) estimated with PCs.
+
         Args:
             mjs: A 1d numpy array of size npc.
             use_fiducial_cosmology (optional): A boolean for whether you 
@@ -384,10 +384,15 @@ class PCTau():
                 used when use_fiducial_cosmology = False.
             yheused (optional): A float or a numpy array for helium fraction;
                 used when use_fiducial_cosmology = False.
+
+        Returns:
+            A tuple of two elements, the first one is a 1d numpy array for the
+            redshift array, the second is tau_cum, a 2d numpy array of shape 
+            (npc, nz) such that tau_cum[i,j] gives the cumulative optical depth 
+            of an unit amplitude PC labeled by i at the z indexed by j.
         """
         npc = self._taumj_cum.shape[1] #TODO centralize this
 
-        # (npc, nz)
         tau_cum = self._taufid_cum + \
             np.sum(np.array([mjs[j] * self._taumj_cum[:,j] for j in range(npc)]), axis=0)
         
@@ -402,9 +407,6 @@ class PCTau():
 
     def _get_tau_rescale(self, omegabh2, omegamh2, yheused): 
         """Returns a scalar for the rescaling of tau due to different cosmo parameters."""
-        return self._get_tau_rescale(omegabh2, omegamh2, yheused)
-
-    def _get_tau_rescale(self, omegabh2, omegamh2, yheused): 
         tau_prefactor = self._get_tau_prefactor(omegabh2, omegamh2, yheused)
         rescale = tau_prefactor/self._tau_prefactor_fid
         return rescale

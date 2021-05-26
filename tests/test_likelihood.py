@@ -7,9 +7,13 @@ pc = rel.PC()
 gauss_like = rel.GaussianLikelihood()
 tanh_model = rel.TanhModel()
 
-def test_get_mjs():
+@pytest.fixture
+def mjs():
     xe_func = tanh_model.get_xe_func(zre=8.27789306640625)
     mjs = pc.get_mjs(xe_func)
+    return mjs
+
+def test_get_mjs(mjs):
     mjs_exp = np.array([ -0.122551897483178, \
         -3.983205659237149E-003, \
         9.736410659918895E-002, \
@@ -18,12 +22,15 @@ def test_get_mjs():
         ])
     assert np.allclose(mjs, mjs_exp)
 
-def test_get_loglike():
-    xe_func = tanh_model.get_xe_func(zre=8.27789306640625)
-    mjs = pc.get_mjs(xe_func)
+def test_get_loglike(mjs):
     loglike = gauss_like.get_loglike(mjs)
     expected = 0.009721218348963334
     assert np.allclose(loglike, expected)
+
+def test_get_tau(mjs):
+    tau_pc = pc.get_tau(mjs)
+    tau_exp = 0.05970755213236639
+    assert np.allclose(tau_pc, tau_exp)
 
 def test_xe_tanh():
 

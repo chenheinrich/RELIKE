@@ -7,7 +7,7 @@ import relike
 def example_plot_pc():
     print('Example 3: Plot PCs and the fiducial xe function used for PCs.\n')
     pc = relike.PC()
-    pc.plot_pc(plot_file_name='plot_pc.pdf')
+    pc.plot_pc(plot_file_name='./plot_pc.pdf')
 
 def example_likelihood_single_model():
 
@@ -63,7 +63,7 @@ def example_posterior():
         likelihood[i] = np.exp(gauss_like.get_loglike(mjs))
 
     plot_tau_posterior_tanh(tau_values, likelihood, \
-        'plot_tau_posterior_tanh.pdf')
+        './plot_tau_posterior_tanh.pdf')
 
 def plot_tau_posterior_tanh(tau_values, likelihood, plot_file_name):
     """Assuming flat prior in tau"""

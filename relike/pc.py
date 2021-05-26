@@ -400,10 +400,6 @@ class PCTau():
         
         return (self._zarray_cum, tau_cum)
 
-    #def _get_tau_rescale(self, omegabh2, omegamh2, yheused): 
-    #    """Returns a scalar for the rescaling of tau due to different cosmo parameters."""
-    #    return self._get_tau_rescale(omegabh2, omegamh2, yheused)
-
     def _get_tau_rescale(self, omegabh2, omegamh2, yheused): 
         """Returns a scalar for the rescaling of tau due to different cosmo parameters."""
         tau_prefactor = self._get_tau_prefactor(omegabh2, omegamh2, yheused)

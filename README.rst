@@ -4,7 +4,11 @@ RELIKE: Reionization Effective Likelihood
 :RELIKE: Reionization Effective Likelihood
 :Homepage: https://github.com/chenheinrich/RELIKE
 
-=============================
+- Fast and Accurate *Planck likelihood*,
+- Quickly constrains any ionization model *xe(z), 6<z<zmax*,
+- Easy-to-use python package,
+- Connects to any sampler for MCMC (see also `CosmoMC-RELIKE <https://github.com/chenheinrich/CosmoMC-RELIKE>`_),
+- Consistent joint analyses now possible!
 
 .. raw:: html
 
@@ -34,10 +38,16 @@ Release Note
 =============================
 
 v0.0.1 
+
 - Added :code:`relike`: a standalone python likelihood package (supporting **only python3**).
+
 - Added :code:`CosmoMC-RELIKE`: an MCMC implementation of RELIKE using the generic CosmoMC sampler. 
-- Supporting arbitrary xe(z) specified by the user between _6 < z < 30_; assuming fully reionized hydrogen and singly ionized helium at _z < 6_.
-- Planck likelihoods used: `plik_lite_TTTEEE + lowl + Sroll2`.
+
+- Supporting arbitrary *xe(z)* specified by the user between *6 < z < 30*; assuming fully reionized hydrogen and singly ionized helium at *z < 6*.
+
+- Added :code:`relike`: a standalone python likelihood package (supporting **only python3**).
+
+- Planck likelihoods used: :code:`plik_lite_TTTEEE + lowl + Sroll2`.
 
 
 Getting Started

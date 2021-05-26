@@ -5,7 +5,7 @@ RELIKE
 :Author: Chen Heinrich
 :Homepage: https://github.com/chenheinrich/RELIKE
 
-If you use this code, please cite `Heinrich & Hu 2021`.
+If you use this code, please cite `Heinrich & Hu 2021 <https://arxiv.org/abs/2104.13998>`_.
 
 
 Description and installation
@@ -31,4 +31,6 @@ Then in the project source root directory use::
 If you want to modify the source code, you can install in the editable mode::
 
     pip install -e . [--user]
+
+A Jupyter notebook and example code are also included in the git repository under examples.
 

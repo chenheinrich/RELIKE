@@ -7,7 +7,7 @@ import relike
 def example_plot_pc():
     print('Example 3: Plot PCs and the fiducial xe function used for PCs.\n')
     pc = relike.PC()
-    pc.plot_pc(plot_file_name='./plot_pc.pdf')
+    pc.plot_pc(plot_file_name='plot_pc.pdf')
 
 def example_likelihood_single_model():
 
@@ -23,23 +23,27 @@ def example_likelihood_single_model():
     mjs = pc.get_mjs(xe_func)
     loglike = gauss_like.get_loglike(mjs)
 
-    print('Tanh model at zre = {}: '.format(zre))
-    print('    PC amplitudes mjs = {}'.format(mjs))
-    print('    log-likehood = {}\n'.format(loglike))
+    print('\tTanh model at zre = {}: '.format(zre))
+    print('\t    PC amplitudes mjs = {}'.format(mjs))
+    print('\t    log-likehood = {}\n'.format(loglike))
 
     # Get likelihood ratio and chi2 (equiavlent) relative to Planck best-fit
     likelihood_ratio = np.exp(loglike)
     delta_chi_squared = -2.0 * (loglike)
-    print('Likelihood ratio relative to the best-fit Planck 2018 tanh model is: {} (>1 is better)'.format(likelihood_ratio))
-    print('Chi-squared relative to the best-fit ' +
+    print('\tLikelihood ratio relative to the best-fit Planck 2018 tanh model is: {} (>1 is better)'.format(likelihood_ratio))
+    print('\tChi-squared relative to the best-fit ' +
         'Planck 2018 tanh model is: {} (negative is better) \n'.format(delta_chi_squared))
 
     # Plot xe: exact vs PC projection
     pc.plot_xe(mjs, xe_func=xe_func, plot_name='./plot_xe.pdf')
     
-    # Plot cumulative tau exact vs PC projection 
-    pc.plot_tau_cumulative(mjs, plot_name='./plot_tau_cumulative.pdf')
+    # Get total optical depth tau using PCs
+    tau_pc = pc.get_tau(mjs)
+    tau_exact = 0.07816
 
+    fmt = '%1.5f'
+    print('\tComparing tau exact vs tau estimated from PCs: {} (exact), {} (PC)\n'\
+        .format(tau_exact, fmt%(tau_pc)))
 
 def example_posterior(): 
     

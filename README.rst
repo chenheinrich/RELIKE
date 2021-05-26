@@ -4,8 +4,31 @@ RELIKE: Reionization Effective Likelihood
 :RELIKE: Reionization Effective Likelihood
 :Homepage: https://github.com/chenheinrich/RELIKE
 
-If you use this code, please cite `Heinrich & Hu 2021 <https://arxiv.org/abs/2104.13998>`_.
+=============================
 
+.. raw:: html
+
+    <a href="https://github.com/chenheinrich/RELIKE/"><img src="https://img.shields.io/badge/GitHub-chenheinrich%2FRELIKE-blue" height="20px"></a>
+    <a href="https://arxiv.org/abs/2104.13998/"><img src="https://img.shields.io/badge/arxiv-2104.13998-red" height="20px"></a>
+    <a href="https://github.com/chenheinrich/RELIKE/blob/master/LICENSE.txt"><img src="https://img.shields.io/badge/LICENSE-GPLv3-blue" height="20px"></a>
+
+
+Description
+=============================
+
+RELIKE (Reionization Effective Likelihood) is a fast and accurate likelihood code that compresses the final Planck 2018 likelihoods for the purpose of constraining models of the global ionization history.
+
+- Using the **python package** :code:`relike`, you can obtain the likelihood of any model of ionization history *xe(z)* in the range *6 < z < zmax*. 
+
+- The RELIKE code works by projecting the model onto the principal components (PC) of ionization history in the CMB data for its PC amplitudes *mj*'s, which are used to quickly **return the effective likelihood of the model**; you may also use it to evaluate the likelihood at multiple points and plot the parameter posteriors. 
+
+- To run an MCMC chain, you can either **use the** :code:`relike` **python package from inside of a sampler** (e.g. Cobaya or Cosmosis), or use our release of :code:`CosmoMC-RELIKE` which has an implementation of the relike code in fortran (both in KDE and Gaussian modes) used to produce published results. 
+
+- Note that there are two modes of effective likelihoods, both are sufficiently accurate: 
+    - the kernel density estimate (KDE) mode, which is slightly more accurate;
+    - the Gaussian approximation mode which is faster and also accurate. The python :code:`relike` contains the Gaussian mode only, while :code:`CosmoMC-RELIKE` has both. 
+    
+If you use this code, please cite `Heinrich & Hu 2021 <https://arxiv.org/abs/2104.13998>`_.
 
 Installation
 =============================
@@ -98,5 +121,8 @@ Branches
 
 The master branch contains latest changes to the main release version.
 
-The develop branch is a development branch.
+The develop branch contains the latest less-stable features in development.
+
+
+
 

@@ -30,7 +30,17 @@ RELIKE (Reionization Effective Likelihood) is a fast and accurate likelihood cod
     
 If you use this code, please cite `Heinrich & Hu 2021 <https://arxiv.org/abs/2104.13998>`_.
 
-Installation
+Release Note
+=============================
+
+v0.0.1 
+- Added :code:`relike`: a standalone python likelihood package (supporting **only python3**).
+- Added :code:`CosmoMC-RELIKE`: an MCMC implementation of RELIKE using the generic CosmoMC sampler. 
+- Supporting arbitrary xe(z) specified by the user between _6 < z < 30_; assuming fully reionized hydrogen and singly ionized helium at _z < 6_.
+- Planck likelihoods used: `plik_lite_TTTEEE + lowl + Sroll2`.
+
+
+Getting Started
 =============================
 
 - First, clone all submodules ::
@@ -42,9 +52,7 @@ Installation
       
       git submodule update --init --recursive
 
-- To stay updated on submodules, use ::
- 
-      git submodule update --remote --merge
+- To stay updated on submodules, use :code:`git submodule update --remote --merge`.
       
 
 
@@ -121,7 +129,7 @@ Branches
 
 The master branch contains latest changes to the main release version.
 
-The develop branch contains the latest less-stable features in development.
+The develop branch contains the latest less stable features in development.
 
 
 

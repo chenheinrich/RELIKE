@@ -46,4 +46,3 @@ def test_xe_tanh():
 
     assert np.allclose(xe_func(zarray), xe_expected)
 
-#TODO add test_get_tau()

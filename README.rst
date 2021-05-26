@@ -65,9 +65,9 @@ Running :code:`relike`
 
         jupyter notebook examples/example.ipynb
 
-- To run example script (same as in the demo Jupyter notebook)
-  
-        :code:`python3 examples/example.py`
+- To run example script (same as in the demo Jupyter notebook)::
+
+      python3 examples/example.py
 
   This will run two examples: 
   1) print the relative chi-squared of an example tanh model relative to the Planck 2018 best-fit tanh model; 
